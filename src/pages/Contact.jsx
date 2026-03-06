@@ -17,16 +17,16 @@ const contactItems = [
     {
         icon: <Phone size={22} />,
         label: 'Phone / WhatsApp',
-        value: '+996 558 033 880',
+        value: '+996 705 660 593',
         sub: 'Available 9am – 8pm (KGT)',
-        link: 'https://wa.me/996558033880',
+        link: 'https://wa.me/996705660593',
     },
     {
         icon: <Mail size={22} />,
         label: 'Email',
-        value: 'kyrgyzriders@gmail.com',
+        value: 'example@gmail.com',
         sub: 'Reply within 24 hours',
-        link: 'mailto:kyrgyzriders@gmail.com',
+        link: 'mailto:example@gmail.com',
     },
     {
         icon: <MapPin size={22} />,
@@ -66,7 +66,7 @@ const Contact = () => {
                 }} />
                 <div className="bg-gradient-hero" style={{ position: 'absolute', inset: 0, zIndex: 1 }} />
 
-                <div className="container" style={{ position: 'relative', zIndex: 2, color: '#fff', paddingBottom: '4rem' }}>
+                <div className="container" style={{ position: 'relative', zIndex: 2, color: '#fff', paddingBottom: '4rem', width: '80%' }}>
                     <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
                         <span style={{
                             display: 'inline-block', padding: '0.3rem 1rem', borderRadius: '999px',
@@ -140,7 +140,7 @@ const Contact = () => {
 
                             {/* WhatsApp CTA */}
                             <a
-                                href="https://wa.me/996558033880"
+                                href="https://wa.me/996705660593"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 style={{

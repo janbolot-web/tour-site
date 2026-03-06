@@ -73,8 +73,8 @@ const Footer = () => {
                         <div className="text-xs font-bold uppercase tracking-widest mb-6" style={{ color: 'hsl(var(--secondary))' }}>Get In Touch</div>
                         <div className="flex flex-col gap-5">
                             {[
-                                { icon: <Phone size={16} />, val: '+996 999 13 75 00' },
-                                { icon: <Mail size={16} />, val: 'info@kyrgyzriders.com' },
+                                { icon: <Phone size={16} />, val: '+996 705 660 593' },
+                                { icon: <Mail size={16} />, val: 'example@gmail.com' },
                                 { icon: <MapPin size={16} />, val: 'Bishkek, Kyrgyzstan' },
                             ].map((item, i) => (
                                 <div key={i} className="flex items-start gap-4 text-sm" style={{ opacity: 0.7 }}>
@@ -87,7 +87,7 @@ const Footer = () => {
                         <div className="mt-8 p-5 rounded-2xl border border-white/10 bg-white/5">
                             <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: 'hsl(var(--secondary))' }}>WhatsApp</p>
                             <a
-                                href="https://wa.me/996555123456"
+                                href="https://wa.me/996705660593"
                                 className="btn text-sm px-5 py-2.5 rounded-xl font-bold text-primary"
                                 style={{ backgroundColor: '#25D366', color: '#fff' }}
                             >

@@ -47,7 +47,7 @@ const Hero = () => {
             )}
 
             {/* Main Content */}
-            <div className="container" style={{ position: 'relative', zIndex: 2, paddingBottom: isMobile ? '4rem' : '6rem', color: '#fff', width: '100%' }}>
+            <div className="container" style={{ position: 'relative', zIndex: 2, paddingBottom: isMobile ? '4rem' : '10rem', color: '#fff', width: '100%' }}>
                 <motion.div
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}

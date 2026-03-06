@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Send, ChevronDown } from 'lucide-react';
 import { toursData } from '../data';
 
-const WHATSAPP_NUMBER = '996999137500';
+const WHATSAPP_NUMBER = '996705660593';
 
 const inputStyle = {
     width: '100%', padding: '0.85rem 1rem',

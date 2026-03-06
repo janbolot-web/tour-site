@@ -1,16 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { Clock, Calendar, Users, MapPin, ArrowLeft, Check, ChevronDown, ChevronUp, Send, ZoomIn, X, ChevronLeft, ChevronRight, Images } from 'lucide-react';
+import { Clock, Calendar, Users, MapPin, ArrowLeft, Check, ChevronDown, ChevronUp, Send, ZoomIn, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { toursData } from '../data';
 import heroImg from '../assets/kyrgyzstan_hero_landscape_1772534628709.png';
 import horseImg from '../assets/kyrgyzstan_horse_riding_tour_1772534860001.png';
 import lakeImg from '../assets/kyrgyzstan_lake_tour_1772535567087.png';
 import panoramaImg from '../assets/kyrgyzstan_mountain_panorama_1772534959492.png';
 
-const WHATSAPP_NUMBER = '996999137500';
+const WHATSAPP_NUMBER = '996705660593';
 
-// ─── Default packing list (shown for all tours) ─────────────────────────────
+// ─── Responsive hook ──────────────────────────────────────────────────────────
+function useWindowWidth() {
+    const [width, setWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+    useEffect(() => {
+        const handler = () => setWidth(window.innerWidth);
+        window.addEventListener('resize', handler);
+        return () => window.removeEventListener('resize', handler);
+    }, []);
+    return width;
+}
+
+// ─── Packing list ─────────────────────────────────────────────────────────────
 const packingList = [
     'Warm layers (fleece or down jacket)',
     'Waterproof and windproof jacket',
@@ -26,7 +37,7 @@ const packingList = [
     'Passport and copies of travel documents',
 ];
 
-// ─── Before You Go info (shared) ─────────────────────────────────────────────
+// ─── Before You Go ────────────────────────────────────────────────────────────
 const beforeYouGo = [
     { title: 'Meals', body: 'All meals provided are traditional Central Asian cuisine. Vegetarian options available — inform your guide in advance.' },
     { title: 'Money & Payments', body: 'Cards accepted in towns. Carry some Kyrgyz Som for small expenses. ≈ $10/day for personal spending is usually sufficient.' },
@@ -36,7 +47,7 @@ const beforeYouGo = [
     { title: 'Health & Safety', body: 'Travel insurance covering medical emergencies and adventure activities is strongly recommended.' },
 ];
 
-// ─── Day card ────────────────────────────────────────────────────────────────
+// ─── Day card ─────────────────────────────────────────────────────────────────
 function DayCard({ day, title, description, meals, overnight, index }) {
     const [open, setOpen] = useState(index === 0);
     return (
@@ -44,36 +55,35 @@ function DayCard({ day, title, description, meals, overnight, index }) {
             <button
                 onClick={() => setOpen(o => !o)}
                 style={{
-                    width: '100%', display: 'flex', alignItems: 'center', gap: '1rem',
-                    padding: '1.25rem 1.5rem', background: 'none', border: 'none',
+                    width: '100%', display: 'flex', alignItems: 'center', gap: '0.75rem',
+                    padding: '1.1rem 1.25rem', background: 'none', border: 'none',
                     cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit',
                 }}
             >
                 <span style={{
-                    width: '36px', height: '36px', borderRadius: '50%', flexShrink: 0,
+                    width: '32px', height: '32px', borderRadius: '50%', flexShrink: 0,
                     background: 'hsl(var(--primary))', color: '#fff',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: '0.8rem', fontWeight: 800,
+                    fontSize: '0.75rem', fontWeight: 800,
                 }}>
                     {day}
                 </span>
-                <span style={{ flex: 1, fontWeight: 700, fontSize: '1rem' }}>{title}</span>
-                {open ? <ChevronUp size={18} style={{ color: 'hsl(var(--muted-foreground))' }} /> : <ChevronDown size={18} style={{ color: 'hsl(var(--muted-foreground))' }} />}
+                <span style={{ flex: 1, fontWeight: 700, fontSize: '0.95rem', lineHeight: 1.3 }}>{title}</span>
+                {open ? <ChevronUp size={16} style={{ color: 'hsl(var(--muted-foreground))', flexShrink: 0 }} /> : <ChevronDown size={16} style={{ color: 'hsl(var(--muted-foreground))', flexShrink: 0 }} />}
             </button>
-
             {open && (
-                <div style={{ borderTop: '1.5px solid hsl(var(--border))', padding: '1.25rem 1.5rem 1.5rem' }}>
-                    <p style={{ color: 'hsl(var(--muted-foreground))', lineHeight: 1.75, fontSize: '0.925rem', marginBottom: '1.25rem' }}>
+                <div style={{ borderTop: '1.5px solid hsl(var(--border))', padding: '1rem 1.25rem 1.25rem' }}>
+                    <p style={{ color: 'hsl(var(--muted-foreground))', lineHeight: 1.75, fontSize: '0.9rem', marginBottom: '1rem' }}>
                         {description}
                     </p>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem' }}>
                         {meals && (
-                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'hsl(var(--muted))', borderRadius: '999px', padding: '0.3rem 0.85rem', fontSize: '0.78rem', fontWeight: 600 }}>
+                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'hsl(var(--muted))', borderRadius: '999px', padding: '0.3rem 0.85rem', fontSize: '0.75rem', fontWeight: 600 }}>
                                 🍽 {meals}
                             </span>
                         )}
                         {overnight && (
-                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'hsl(var(--muted))', borderRadius: '999px', padding: '0.3rem 0.85rem', fontSize: '0.78rem', fontWeight: 600 }}>
+                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'hsl(var(--muted))', borderRadius: '999px', padding: '0.3rem 0.85rem', fontSize: '0.75rem', fontWeight: 600 }}>
                                 🏠 {overnight}
                             </span>
                         )}
@@ -84,7 +94,7 @@ function DayCard({ day, title, description, meals, overnight, index }) {
     );
 }
 
-// ─── Generate default itinerary for tours without a custom one ───────────────
+// ─── Default itinerary generator ─────────────────────────────────────────────
 function getDefaultItinerary(tour) {
     const days = [];
     for (let i = 1; i <= Math.min(tour.durationDays || 3, 8); i++) {
@@ -103,7 +113,6 @@ function getDefaultItinerary(tour) {
     return days;
 }
 
-// ─── Custom itinerary for Elena's tour ───────────────────────────────────────
 const elenaItinerary = [
     { day: 1, title: 'Bishkek → Kyzyl-Oi Village', description: 'Scenic drive from Bishkek through the Too-Ashuu Pass (3,600m). Stop for a panoramic view and a picnic lunch by the river. Arrive in Kyzyl-Oi Village, settle into a guesthouse, and take a guided walk through the village.', meals: 'Lunch-picnic, Dinner', overnight: 'Guesthouse' },
     { day: 2, title: 'Kyzyl-Oi → Kyzart → Song-Kol Lake (horseback)', description: 'Drive to Kyzart Village then mount up! Ride through open fields toward the Uzbek-Ashuu Pass (3,300m). First views of Song-Kol Lake appear from the summit. Descend to the lakeshore and settle into a nomadic yurt camp.', meals: 'Breakfast, Lunch, Dinner', overnight: 'Yurt (3,100m)' },
@@ -114,10 +123,9 @@ const elenaItinerary = [
     { day: 7, title: 'Chong-Kemin → Bishkek (departure)', description: 'Final morning in the mountains. Transfer back to Bishkek. Your driver drops you at your hotel or the airport. Safe travels!', meals: 'Breakfast', overnight: 'Departure' },
 ];
 
-// ─── Map tour ID → itinerary ──────────────────────────────────────────────────
 const itineraryMap = { 'elena-taber-7': elenaItinerary };
 
-// ─── Gallery data per category ───────────────────────────────────────────────
+// ─── Gallery data per category ────────────────────────────────────────────────
 const categoryGalleries = {
     'Horse Riding': [
         { src: horseImg, caption: 'Horseback riding to Song-Kol Lake' },
@@ -168,7 +176,6 @@ const defaultGallery = [
 ];
 
 function getTourGallery(tour) {
-    // Per-tour override first
     if (tour.id === 'elena-taber-7') return [
         { src: horseImg, caption: 'Horseback riding to Song-Kol Lake' },
         { src: lakeImg, caption: 'Song-Kol Lake at sunset' },
@@ -180,13 +187,17 @@ function getTourGallery(tour) {
     return categoryGalleries[tour.category] || defaultGallery;
 }
 
-// ─── Lightbox component ───────────────────────────────────────────────────────
+// ─── Lightbox ─────────────────────────────────────────────────────────────────
 function TourLightbox({ photos, index, onClose }) {
     const [current, setCurrent] = useState(index);
     const prev = () => setCurrent(i => (i - 1 + photos.length) % photos.length);
     const next = () => setCurrent(i => (i + 1) % photos.length);
     useEffect(() => {
-        const h = (e) => { if (e.key === 'ArrowLeft') prev(); if (e.key === 'ArrowRight') next(); if (e.key === 'Escape') onClose(); };
+        const h = (e) => {
+            if (e.key === 'ArrowLeft') prev();
+            if (e.key === 'ArrowRight') next();
+            if (e.key === 'Escape') onClose();
+        };
         window.addEventListener('keydown', h);
         return () => window.removeEventListener('keydown', h);
     }, []);
@@ -194,16 +205,79 @@ function TourLightbox({ photos, index, onClose }) {
     return (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={onClose}
-            style={{ position: 'fixed', inset: 0, zIndex: 2000, background: 'rgba(0,0,0,0.93)', backdropFilter: 'blur(6px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
-            <button onClick={onClose} style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', borderRadius: '50%', width: '44px', height: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}><X size={20} /></button>
-            <button onClick={e => { e.stopPropagation(); prev(); }} style={{ position: 'absolute', left: '1.5rem', top: '50%', transform: 'translateY(-50%)', background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', borderRadius: '50%', width: '48px', height: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}><ChevronLeft size={22} /></button>
+            style={{ position: 'fixed', inset: 0, zIndex: 2000, background: 'rgba(0,0,0,0.93)', backdropFilter: 'blur(6px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}>
+            <button onClick={onClose} style={{ position: 'absolute', top: '1rem', right: '1rem', background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', borderRadius: '50%', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}><X size={18} /></button>
+            <button onClick={e => { e.stopPropagation(); prev(); }} style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', borderRadius: '50%', width: '44px', height: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}><ChevronLeft size={20} /></button>
             <motion.div key={current} initial={{ opacity: 0, scale: 0.93 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.22 }} onClick={e => e.stopPropagation()} style={{ maxWidth: '900px', width: '100%', textAlign: 'center' }}>
-                <img src={photo.src} alt={photo.caption} style={{ width: '100%', maxHeight: '72vh', objectFit: 'contain', borderRadius: '1rem' }} />
-                <p style={{ color: 'rgba(255,255,255,0.8)', marginTop: '1rem', fontSize: '1rem', fontWeight: 500 }}>{photo.caption}</p>
-                <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.8rem', marginTop: '0.25rem' }}>{current + 1} / {photos.length}</p>
+                <img src={photo.src} alt={photo.caption} style={{ width: '100%', maxHeight: '72vh', objectFit: 'contain', borderRadius: '0.75rem' }} />
+                <p style={{ color: 'rgba(255,255,255,0.8)', marginTop: '0.75rem', fontSize: '0.95rem', fontWeight: 500 }}>{photo.caption}</p>
+                <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.78rem', marginTop: '0.2rem' }}>{current + 1} / {photos.length}</p>
             </motion.div>
-            <button onClick={e => { e.stopPropagation(); next(); }} style={{ position: 'absolute', right: '1.5rem', top: '50%', transform: 'translateY(-50%)', background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', borderRadius: '50%', width: '48px', height: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}><ChevronRight size={22} /></button>
+            <button onClick={e => { e.stopPropagation(); next(); }} style={{ position: 'absolute', right: '0.75rem', top: '50%', transform: 'translateY(-50%)', background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', borderRadius: '50%', width: '44px', height: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}><ChevronRight size={20} /></button>
         </motion.div>
+    );
+}
+
+// ─── Sidebar card (reused on both desktop and mobile) ─────────────────────────
+function SidebarCard({ tour, onBookNow, sendWhatsApp, isMobile }) {
+    return (
+        <div style={{ background: '#fff', borderRadius: '1.5rem', padding: isMobile ? '1.25rem' : '2rem', boxShadow: '0 8px 48px rgba(0,0,0,0.09)', border: '1px solid hsl(var(--border))' }}>
+            {/* Price */}
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem', marginBottom: '1.25rem' }}>
+                <div style={{ fontSize: isMobile ? '1.6rem' : '2rem', fontWeight: 900, color: 'hsl(var(--primary))' }}>{tour.price}</div>
+                <div style={{ fontSize: '0.8rem', color: 'hsl(var(--muted-foreground))' }}>per person</div>
+            </div>
+
+            {/* Meta grid */}
+            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : '1fr', gap: isMobile ? '0.6rem' : '0.75rem', marginBottom: '1.5rem' }}>
+                {[
+                    { icon: <Clock size={15} />, label: 'Duration', value: tour.duration },
+                    { icon: <Calendar size={15} />, label: 'Season', value: tour.season },
+                    { icon: <MapPin size={15} />, label: 'Start / End', value: 'Bishkek' },
+                    { icon: <Users size={15} />, label: 'Group size', value: '1 – 8 people' },
+                ].map(item => (
+                    <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.82rem', background: isMobile ? 'hsl(var(--muted)/0.5)' : 'none', borderRadius: isMobile ? '0.6rem' : 0, padding: isMobile ? '0.5rem 0.75rem' : '0.25rem 0', border: isMobile ? 'none' : 'none' }}>
+                        <span style={{ color: 'hsl(var(--secondary))', flexShrink: 0 }}>{item.icon}</span>
+                        {!isMobile && <span style={{ color: 'hsl(var(--muted-foreground))', flex: 1 }}>{item.label}</span>}
+                        <span style={{ fontWeight: 700 }}>{item.value}</span>
+                    </div>
+                ))}
+            </div>
+
+            {/* Buttons */}
+            <button
+                onClick={onBookNow}
+                style={{
+                    width: '100%', padding: '0.9rem', borderRadius: '0.85rem',
+                    background: 'hsl(var(--primary))', color: '#fff',
+                    fontWeight: 800, fontSize: '0.95rem', border: 'none', cursor: 'pointer',
+                    fontFamily: 'inherit', marginBottom: '0.6rem', transition: 'opacity 0.2s',
+                }}
+                onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
+                onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+            >
+                Book This Tour
+            </button>
+
+            <button
+                onClick={sendWhatsApp}
+                style={{
+                    width: '100%', padding: '0.9rem', borderRadius: '0.85rem',
+                    background: '#25D366', color: '#fff',
+                    fontWeight: 800, fontSize: '0.95rem', border: 'none', cursor: 'pointer',
+                    fontFamily: 'inherit', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
+                    transition: 'opacity 0.2s',
+                }}
+                onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
+                onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+            >
+                <Send size={16} /> Ask via WhatsApp
+            </button>
+
+            <p style={{ textAlign: 'center', fontSize: '0.75rem', color: 'hsl(var(--muted-foreground))', marginTop: '0.9rem', lineHeight: 1.5 }}>
+                Free cancellation up to 14 days before the tour
+            </p>
+        </div>
     );
 }
 
@@ -213,6 +287,11 @@ const TourDetail = ({ onBookNow }) => {
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('description');
     const [lightboxIndex, setLightboxIndex] = useState(null);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+
+    const w = useWindowWidth();
+    const isMobile = w < 640;
+    const isTablet = w < 1024;
 
     const tour = toursData.find(t => t.id === id);
 
@@ -249,64 +328,84 @@ const TourDetail = ({ onBookNow }) => {
     ];
 
     return (
-        <div style={{ paddingTop: '80px', background: '#fafaf9', minHeight: '100vh' }}>
-            {/* Hero */}
-            <div style={{ position: 'relative', height: '60vh', minHeight: '400px', overflow: 'hidden' }}>
+        <div style={{ paddingTop: '80px', background: '#fafaf9', minHeight: '100vh', paddingBottom: isMobile ? '80px' : 0 }}>
+
+            {/* ── Hero ── */}
+            <div style={{ position: 'relative', height: isMobile ? '45vh' : '60vh', minHeight: isMobile ? '280px' : '380px', overflow: 'hidden' }}>
                 <img src={tour.image} alt={tour.title} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.5)' }} />
-                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 60%, transparent 100%)' }} />
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.15) 60%, transparent 100%)' }} />
 
                 {/* Back button */}
                 <button
                     onClick={() => navigate('/tours')}
                     style={{
-                        position: 'absolute', top: '2rem', left: '2rem',
-                        display: 'flex', alignItems: 'center', gap: '0.5rem',
+                        position: 'absolute', top: '1.25rem', left: '1.25rem',
+                        display: 'flex', alignItems: 'center', gap: '0.4rem',
                         background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)',
-                        border: '1px solid rgba(255,255,255,0.3)',
-                        color: '#fff', borderRadius: '0.75rem',
-                        padding: '0.5rem 1rem', fontWeight: 700, fontSize: '0.875rem',
-                        cursor: 'pointer', fontFamily: 'inherit',
+                        border: '1px solid rgba(255,255,255,0.3)', color: '#fff',
+                        borderRadius: '0.75rem', padding: '0.45rem 0.85rem',
+                        fontWeight: 700, fontSize: '0.82rem', cursor: 'pointer', fontFamily: 'inherit',
                     }}
                 >
-                    <ArrowLeft size={16} /> All Tours
+                    <ArrowLeft size={14} /> All Tours
                 </button>
 
-                <div className="container" style={{ position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)', width: '100%', paddingBottom: '2.5rem', color: '#fff' }}>
-                    <div style={{ display: 'flex', gap: '0.6rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
-                        <span style={{ background: 'hsl(var(--secondary))', color: 'hsl(var(--primary))', padding: '0.25rem 0.85rem', borderRadius: '999px', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                {/* Hero text */}
+                <div className="container" style={{ position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)', width: '100%', paddingBottom: isMobile ? '1.5rem' : '2.5rem', color: '#fff' }}>
+                    <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem', flexWrap: 'wrap' }}>
+                        <span style={{ background: 'hsl(var(--secondary))', color: 'hsl(var(--primary))', padding: '0.2rem 0.75rem', borderRadius: '999px', fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
                             {tour.category}
                         </span>
-                        <span style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(6px)', border: '1px solid rgba(255,255,255,0.3)', color: '#fff', padding: '0.25rem 0.85rem', borderRadius: '999px', fontSize: '0.75rem', fontWeight: 600 }}>
+                        <span style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(6px)', border: '1px solid rgba(255,255,255,0.3)', color: '#fff', padding: '0.2rem 0.75rem', borderRadius: '999px', fontSize: '0.7rem', fontWeight: 600 }}>
                             {tour.duration}
                         </span>
-                        <span style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(6px)', border: '1px solid rgba(255,255,255,0.3)', color: '#fff', padding: '0.25rem 0.85rem', borderRadius: '999px', fontSize: '0.75rem', fontWeight: 600 }}>
+                        <span style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(6px)', border: '1px solid rgba(255,255,255,0.3)', color: '#fff', padding: '0.2rem 0.75rem', borderRadius: '999px', fontSize: '0.7rem', fontWeight: 600 }}>
                             {tour.season}
                         </span>
                     </div>
-                    <h1 style={{ fontSize: 'clamp(1.75rem, 4vw, 3.5rem)', fontWeight: 900, letterSpacing: '-0.03em', lineHeight: 1.1 }}>
+                    <h1 style={{ fontSize: isMobile ? 'clamp(1.5rem, 6vw, 2.2rem)' : 'clamp(1.75rem, 4vw, 3.5rem)', fontWeight: 900, letterSpacing: '-0.03em', lineHeight: 1.1 }}>
                         {tour.title}
                     </h1>
                 </div>
             </div>
 
-            {/* Content + Sidebar */}
-            <div className="container" style={{ paddingTop: '3rem', paddingBottom: '5rem' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: '3rem', alignItems: 'start' }}>
+            {/* ── Content + Sidebar ── */}
+            <div className="container" style={{ paddingTop: isMobile ? '1.5rem' : '3rem', paddingBottom: isMobile ? '1.5rem' : '5rem' }}>
+                <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: isTablet ? '1fr' : '1fr 340px',
+                    gap: isTablet ? '2rem' : '3rem',
+                    alignItems: 'start',
+                }}>
 
                     {/* ── Left: Main Content ── */}
                     <div>
-                        {/* Tabs */}
-                        <div style={{ display: 'flex', gap: '0.25rem', borderBottom: '2px solid hsl(var(--border))', marginBottom: '2.5rem' }}>
+                        {/* Tabs — horizontal scroll on mobile */}
+                        <div style={{
+                            display: 'flex',
+                            gap: '0',
+                            borderBottom: '2px solid hsl(var(--border))',
+                            marginBottom: isMobile ? '1.5rem' : '2.5rem',
+                            overflowX: 'auto',
+                            WebkitOverflowScrolling: 'touch',
+                            scrollbarWidth: 'none',
+                        }}>
                             {tabs.map(tab => (
                                 <button
                                     key={tab.id}
                                     onClick={() => setActiveTab(tab.id)}
                                     style={{
-                                        padding: '0.75rem 1.25rem', fontFamily: 'inherit', cursor: 'pointer',
-                                        fontWeight: 700, fontSize: '0.9rem', border: 'none', background: 'none',
+                                        padding: isMobile ? '0.65rem 1rem' : '0.75rem 1.25rem',
+                                        fontFamily: 'inherit', cursor: 'pointer',
+                                        fontWeight: 700,
+                                        fontSize: isMobile ? '0.8rem' : '0.875rem',
+                                        border: 'none', background: 'none',
                                         borderBottom: activeTab === tab.id ? '2px solid hsl(var(--primary))' : '2px solid transparent',
                                         color: activeTab === tab.id ? 'hsl(var(--primary))' : 'hsl(var(--muted-foreground))',
-                                        marginBottom: '-2px', transition: 'color 0.2s',
+                                        marginBottom: '-2px',
+                                        transition: 'color 0.2s',
+                                        whiteSpace: 'nowrap',
+                                        flexShrink: 0,
                                     }}
                                 >
                                     {tab.label}
@@ -317,24 +416,26 @@ const TourDetail = ({ onBookNow }) => {
                         {/* Tab: Description */}
                         {activeTab === 'description' && (
                             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-                                <p style={{ fontSize: '1.05rem', lineHeight: 1.8, color: 'hsl(var(--muted-foreground))', marginBottom: '2.5rem' }}>
+                                <p style={{ fontSize: isMobile ? '0.95rem' : '1.05rem', lineHeight: 1.8, color: 'hsl(var(--muted-foreground))', marginBottom: '2rem' }}>
                                     {tour.description}
                                 </p>
 
-                                {/* Highlights */}
-                                <h2 style={{ fontSize: '1.35rem', fontWeight: 800, marginBottom: '1.25rem', letterSpacing: '-0.02em' }}>Tour Highlights</h2>
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '3rem' }}>
+                                <h2 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '1rem', letterSpacing: '-0.02em' }}>Tour Highlights</h2>
+                                <div style={{
+                                    display: 'grid',
+                                    gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+                                    gap: '0.65rem', marginBottom: '2.5rem'
+                                }}>
                                     {highlights.map(h => (
-                                        <div key={h} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', fontSize: '0.925rem', fontWeight: 500 }}>
-                                            <Check size={16} style={{ color: '#22c55e', marginTop: '0.15rem', flexShrink: 0 }} />
+                                        <div key={h} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', fontSize: '0.9rem', fontWeight: 500 }}>
+                                            <Check size={15} style={{ color: '#22c55e', marginTop: '0.15rem', flexShrink: 0 }} />
                                             {h}
                                         </div>
                                     ))}
                                 </div>
 
-                                {/* Itinerary */}
-                                <h2 style={{ fontSize: '1.35rem', fontWeight: 800, marginBottom: '1.25rem', letterSpacing: '-0.02em' }}>Day by Day Itinerary</h2>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                <h2 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '1rem', letterSpacing: '-0.02em' }}>Day by Day Itinerary</h2>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
                                     {itinerary.map((d, i) => (
                                         <DayCard key={i} index={i} {...d} />
                                     ))}
@@ -345,26 +446,39 @@ const TourDetail = ({ onBookNow }) => {
                         {/* Tab: Gallery */}
                         {activeTab === 'gallery' && (
                             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-                                <h2 style={{ fontSize: '1.35rem', fontWeight: 800, marginBottom: '0.5rem', letterSpacing: '-0.02em' }}>Tour Gallery</h2>
-                                <p style={{ color: 'hsl(var(--muted-foreground))', fontSize: '0.9rem', marginBottom: '1.75rem' }}>Click any photo to view full screen.</p>
-                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '1rem' }}>
+                                <h2 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '0.4rem', letterSpacing: '-0.02em' }}>Tour Gallery</h2>
+                                <p style={{ color: 'hsl(var(--muted-foreground))', fontSize: '0.875rem', marginBottom: '1.25rem' }}>
+                                    {isMobile ? 'Tap any photo to view full screen.' : 'Click any photo to view full screen.'}
+                                </p>
+                                <div style={{
+                                    display: 'grid',
+                                    gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(auto-fill, minmax(200px, 1fr))',
+                                    gap: isMobile ? '0.65rem' : '1rem',
+                                }}>
                                     {tourGallery.map((photo, idx) => (
                                         <div
                                             key={idx}
                                             onClick={() => setLightboxIndex(idx)}
-                                            style={{ position: 'relative', borderRadius: '1.1rem', overflow: 'hidden', cursor: 'zoom-in', aspectRatio: idx % 3 === 0 ? '16/9' : '4/3', boxShadow: '0 4px 20px rgba(0,0,0,0.1)', gridColumn: idx % 3 === 0 ? 'span 2' : 'span 1' }}
+                                            style={{
+                                                position: 'relative', borderRadius: '1rem', overflow: 'hidden',
+                                                cursor: 'zoom-in', aspectRatio: '4/3',
+                                                boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                                                // wide shot on desktop only
+                                                gridColumn: (!isMobile && idx % 3 === 0) ? 'span 2' : 'span 1',
+                                            }}
                                         >
-                                            <img src={photo.src} alt={photo.caption} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease', display: 'block' }}
+                                            <img
+                                                src={photo.src} alt={photo.caption}
+                                                style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease', display: 'block' }}
                                                 onMouseEnter={e => e.target.style.transform = 'scale(1.06)'}
                                                 onMouseLeave={e => e.target.style.transform = 'scale(1)'}
                                             />
-                                            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 55%)', opacity: 0, transition: 'opacity 0.3s', display: 'flex', alignItems: 'flex-end', padding: '1rem' }}
-                                                onMouseEnter={e => e.currentTarget.style.opacity = '1'}
-                                                onMouseLeave={e => e.currentTarget.style.opacity = '0'}
+                                            <div
+                                                style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 55%)', display: 'flex', alignItems: 'flex-end', padding: '0.75rem' }}
                                             >
                                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', color: '#fff' }}>
-                                                    <span style={{ fontSize: '0.82rem', fontWeight: 600 }}>{photo.caption}</span>
-                                                    <ZoomIn size={18} style={{ flexShrink: 0, marginLeft: '0.5rem', opacity: 0.85 }} />
+                                                    <span style={{ fontSize: '0.72rem', fontWeight: 600, lineHeight: 1.3 }}>{photo.caption}</span>
+                                                    <ZoomIn size={15} style={{ flexShrink: 0, marginLeft: '0.4rem', opacity: 0.85 }} />
                                                 </div>
                                             </div>
                                         </div>
@@ -376,11 +490,15 @@ const TourDetail = ({ onBookNow }) => {
                         {/* Tab: Packing */}
                         {activeTab === 'packing' && (
                             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-                                <h2 style={{ fontSize: '1.35rem', fontWeight: 800, marginBottom: '1.25rem' }}>What to Pack?</h2>
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+                                <h2 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '1rem' }}>What to Pack?</h2>
+                                <div style={{
+                                    display: 'grid',
+                                    gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+                                    gap: '0.65rem'
+                                }}>
                                     {packingList.map(item => (
-                                        <div key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', background: '#fff', padding: '0.75rem 1rem', borderRadius: '0.75rem', border: '1px solid hsl(var(--border))', fontSize: '0.9rem', fontWeight: 500 }}>
-                                            <Check size={15} style={{ color: '#22c55e', marginTop: '0.15rem', flexShrink: 0 }} />
+                                        <div key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', background: '#fff', padding: '0.7rem 0.9rem', borderRadius: '0.75rem', border: '1px solid hsl(var(--border))', fontSize: '0.875rem', fontWeight: 500 }}>
+                                            <Check size={14} style={{ color: '#22c55e', marginTop: '0.15rem', flexShrink: 0 }} />
                                             {item}
                                         </div>
                                     ))}
@@ -388,15 +506,15 @@ const TourDetail = ({ onBookNow }) => {
                             </motion.div>
                         )}
 
-                        {/* Tab: Before you go */}
+                        {/* Tab: Before You Go */}
                         {activeTab === 'beforeyougo' && (
                             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-                                <h2 style={{ fontSize: '1.35rem', fontWeight: 800, marginBottom: '1.5rem' }}>Before You Go</h2>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                                <h2 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '1.25rem' }}>Before You Go</h2>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
                                     {beforeYouGo.map(item => (
-                                        <div key={item.title} style={{ background: '#fff', borderRadius: '1rem', padding: '1.25rem 1.5rem', border: '1px solid hsl(var(--border))' }}>
-                                            <div style={{ fontWeight: 800, marginBottom: '0.4rem', fontSize: '1rem' }}>{item.title}</div>
-                                            <p style={{ color: 'hsl(var(--muted-foreground))', fontSize: '0.9rem', lineHeight: 1.7 }}>{item.body}</p>
+                                        <div key={item.title} style={{ background: '#fff', borderRadius: '1rem', padding: '1.1rem 1.25rem', border: '1px solid hsl(var(--border))' }}>
+                                            <div style={{ fontWeight: 800, marginBottom: '0.35rem', fontSize: '0.95rem' }}>{item.title}</div>
+                                            <p style={{ color: 'hsl(var(--muted-foreground))', fontSize: '0.875rem', lineHeight: 1.7 }}>{item.body}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -404,63 +522,91 @@ const TourDetail = ({ onBookNow }) => {
                         )}
                     </div>
 
-                    {/* ── Right: Sticky Sidebar ── */}
-                    <div style={{ position: 'sticky', top: '6rem' }}>
-                        <div style={{ background: '#fff', borderRadius: '1.75rem', padding: '2rem', boxShadow: '0 8px 48px rgba(0,0,0,0.09)', border: '1px solid hsl(var(--border))' }}>
-                            <div style={{ fontSize: '2rem', fontWeight: 900, color: 'hsl(var(--primary))', marginBottom: '0.25rem' }}>{tour.price}</div>
-                            <div style={{ fontSize: '0.8rem', color: 'hsl(var(--muted-foreground))', marginBottom: '1.5rem' }}>per person</div>
-
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.75rem' }}>
-                                {[
-                                    { icon: <Clock size={16} />, label: 'Duration', value: tour.duration },
-                                    { icon: <Calendar size={16} />, label: 'Season', value: tour.season },
-                                    { icon: <MapPin size={16} />, label: 'Start / End', value: 'Bishkek' },
-                                    { icon: <Users size={16} />, label: 'Group size', value: '1 – 8 people' },
-                                ].map(item => (
-                                    <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '0.875rem' }}>
-                                        <span style={{ color: 'hsl(var(--secondary))', flexShrink: 0 }}>{item.icon}</span>
-                                        <span style={{ color: 'hsl(var(--muted-foreground))', flex: 1 }}>{item.label}</span>
-                                        <span style={{ fontWeight: 700 }}>{item.value}</span>
-                                    </div>
-                                ))}
-                            </div>
-
-                            <button
-                                onClick={onBookNow}
-                                style={{
-                                    width: '100%', padding: '1rem', borderRadius: '0.85rem',
-                                    background: 'hsl(var(--primary))', color: '#fff',
-                                    fontWeight: 800, fontSize: '1rem', border: 'none', cursor: 'pointer',
-                                    fontFamily: 'inherit', marginBottom: '0.75rem', transition: 'opacity 0.2s',
-                                }}
-                                onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
-                                onMouseLeave={e => e.currentTarget.style.opacity = '1'}
-                            >
-                                Book This Tour
-                            </button>
-
-                            <button
-                                onClick={sendWhatsApp}
-                                style={{
-                                    width: '100%', padding: '1rem', borderRadius: '0.85rem',
-                                    background: '#25D366', color: '#fff',
-                                    fontWeight: 800, fontSize: '1rem', border: 'none', cursor: 'pointer',
-                                    fontFamily: 'inherit', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
-                                    transition: 'opacity 0.2s',
-                                }}
-                                onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
-                                onMouseLeave={e => e.currentTarget.style.opacity = '1'}
-                            >
-                                <Send size={17} /> Ask via WhatsApp
-                            </button>
-
-                            <p style={{ textAlign: 'center', fontSize: '0.78rem', color: 'hsl(var(--muted-foreground))', marginTop: '1rem', lineHeight: 1.5 }}>
-                                Free cancellation up to 14 days before the tour
-                            </p>
+                    {/* ── Right: Desktop Sidebar ── */}
+                    {!isTablet && (
+                        <div style={{ position: 'sticky', top: '6rem' }}>
+                            <SidebarCard tour={tour} onBookNow={onBookNow} sendWhatsApp={sendWhatsApp} isMobile={false} />
                         </div>
-                    </div>
+                    )}
+
+                    {/* ── Tablet: Sidebar below content ── */}
+                    {isTablet && !isMobile && (
+                        <SidebarCard tour={tour} onBookNow={onBookNow} sendWhatsApp={sendWhatsApp} isMobile={false} />
+                    )}
+
+                    {/* ── Mobile: Sidebar as collapsible section ── */}
+                    {isMobile && (
+                        <div>
+                            <button
+                                onClick={() => setSidebarOpen(v => !v)}
+                                style={{
+                                    width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                                    padding: '1rem 1.25rem', borderRadius: '1rem',
+                                    background: '#fff', border: '1.5px solid hsl(var(--border))',
+                                    fontFamily: 'inherit', cursor: 'pointer', fontWeight: 700, fontSize: '0.95rem',
+                                    marginBottom: sidebarOpen ? '0.75rem' : 0,
+                                }}
+                            >
+                                <span>📋 Tour Details & Pricing</span>
+                                <span style={{ fontWeight: 900, color: 'hsl(var(--primary))', fontSize: '1.1rem' }}>
+                                    {tour.price} {sidebarOpen ? '▲' : '▼'}
+                                </span>
+                            </button>
+                            <AnimatePresence>
+                                {sidebarOpen && (
+                                    <motion.div
+                                        initial={{ opacity: 0, height: 0 }}
+                                        animate={{ opacity: 1, height: 'auto' }}
+                                        exit={{ opacity: 0, height: 0 }}
+                                        style={{ overflow: 'hidden' }}
+                                    >
+                                        <SidebarCard tour={tour} onBookNow={onBookNow} sendWhatsApp={sendWhatsApp} isMobile />
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+                    )}
                 </div>
             </div>
+
+            {/* ── Mobile: Sticky Bottom Booking Bar ── */}
+            {isMobile && (
+                <div style={{
+                    position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 100,
+                    background: '#fff', borderTop: '1px solid hsl(var(--border))',
+                    boxShadow: '0 -4px 24px rgba(0,0,0,0.08)',
+                    padding: '0.75rem 1.25rem',
+                    display: 'flex', alignItems: 'center', gap: '0.75rem',
+                }}>
+                    <div style={{ flex: 1 }}>
+                        <div style={{ fontSize: '1.25rem', fontWeight: 900, color: 'hsl(var(--primary))', lineHeight: 1 }}>{tour.price}</div>
+                        <div style={{ fontSize: '0.7rem', color: 'hsl(var(--muted-foreground))' }}>per person</div>
+                    </div>
+                    <button
+                        onClick={sendWhatsApp}
+                        style={{
+                            padding: '0.7rem 1rem', borderRadius: '0.75rem',
+                            background: '#25D366', color: '#fff',
+                            fontWeight: 700, fontSize: '0.85rem', border: 'none', cursor: 'pointer',
+                            fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: '0.4rem',
+                            flexShrink: 0,
+                        }}
+                    >
+                        <Send size={15} /> WhatsApp
+                    </button>
+                    <button
+                        onClick={onBookNow}
+                        style={{
+                            padding: '0.7rem 1.25rem', borderRadius: '0.75rem',
+                            background: 'hsl(var(--primary))', color: '#fff',
+                            fontWeight: 700, fontSize: '0.85rem', border: 'none', cursor: 'pointer',
+                            fontFamily: 'inherit', flexShrink: 0,
+                        }}
+                    >
+                        Book Now
+                    </button>
+                </div>
+            )}
 
             {/* Lightbox */}
             <AnimatePresence>

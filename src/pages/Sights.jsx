@@ -263,7 +263,7 @@ const Sights = () => {
 
                 <div className="bg-gradient-hero" style={{ position: 'absolute', inset: 0, zIndex: 2 }} />
 
-                <div className="container" style={{ position: 'relative', zIndex: 3, color: '#fff', paddingBottom: isMobile ? '2.5rem' : '4rem' }}>
+                <div className="container" style={{ position: 'relative', zIndex: 3, color: '#fff', paddingBottom: isMobile ? '2.5rem' : '6rem', width: '80%' }}>
                     <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
                         <span style={{
                             display: 'inline-flex', alignItems: 'center', gap: '0.5rem',

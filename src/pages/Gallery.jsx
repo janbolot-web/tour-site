@@ -131,10 +131,11 @@ const Gallery = () => {
     return (
         <div style={{ paddingTop: '80px', minHeight: '100vh' }}>
             {/* Hero */}
+
             <section style={{ position: 'relative', height: '45vh', minHeight: '320px', display: 'flex', alignItems: 'flex-end', overflow: 'hidden' }}>
                 <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(${panoramaImg})`, backgroundSize: 'cover', backgroundPosition: 'center', filter: 'brightness(0.45)' }} />
                 <div className="bg-gradient-hero" style={{ position: 'absolute', inset: 0 }} />
-                <div className="container" style={{ position: 'relative', zIndex: 2, color: '#fff', paddingBottom: '3.5rem' }}>
+                <div className="container" style={{ position: 'relative', zIndex: 2, color: '#fff', paddingBottom: '6rem', width: '80%' }}>
                     <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
                         <span style={{
                             display: 'inline-block', padding: '0.3rem 1rem', borderRadius: '999px',

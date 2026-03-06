@@ -159,7 +159,7 @@ const Tours = ({ onBookNow }) => {
                     <Play size={isMobile ? 22 : 30} fill="white" />
                 </button>
 
-                <div className="container" style={{ position: 'relative', zIndex: 2, paddingBottom: isMobile ? '2rem' : '3rem', color: '#fff' }}>
+                <div className="container" style={{ position: 'relative', zIndex: 2, paddingBottom: isMobile ? '2rem' : '8rem', color: '#fff', width: '80%' }}>
                     <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
                         <span style={{
                             display: 'inline-block', padding: '0.25rem 1rem', borderRadius: '999px',

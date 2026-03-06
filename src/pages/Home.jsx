@@ -44,8 +44,8 @@ const Home = () => {
                             {/* Contact Cards */}
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                                 {[
-                                    { icon: <Phone size={20} />, label: 'WhatsApp / Phone', value: '+996 558 033 880' },
-                                    { icon: <Mail size={20} />, label: 'Email', value: 'kyrgyzriders@gmail.com' },
+                                    { icon: <Phone size={20} />, label: 'WhatsApp / Phone', value: '+996 705 660 593' },
+                                    { icon: <Mail size={20} />, label: 'Email', value: 'example@gmail.com' },
                                     { icon: <MapPin size={20} />, label: 'Office', value: 'Bishkek, Kyrgyzstan' },
                                 ].map(item => (
                                     <div key={item.label} style={{
