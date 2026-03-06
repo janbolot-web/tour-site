@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { teamData } from '../data';
 import heroImg from '../assets/kyrgyzstan_hero_landscape_1772534628709.png';
 import { Users, History, Heart, Globe } from 'lucide-react';
@@ -358,49 +359,51 @@ const AboutUs = () => {
                                     overflow: 'hidden',
                                     boxShadow: '0 4px 28px rgba(0,0,0,0.07)',
                                     border: '1px solid hsl(var(--border))',
-                                    cursor: 'default',
+                                    cursor: 'pointer',
                                 }}
                             >
-                                {/* Image */}
-                                <div style={{ position: 'relative', height: isMobile ? '150px' : '240px', overflow: 'hidden' }}>
-                                    <img
-                                        src={member.image}
-                                        alt={member.name}
-                                        style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', transition: 'transform 0.7s ease' }}
-                                        onMouseEnter={e => !isMobile && (e.target.style.transform = 'scale(1.06)')}
-                                        onMouseLeave={e => e.target.style.transform = 'scale(1)'}
-                                    />
-                                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%)' }} />
-                                    <div style={{ position: 'absolute', bottom: '0.6rem', left: '0.6rem', right: '0.6rem' }}>
-                                        <span style={{
-                                            background: 'hsl(var(--secondary))', color: 'hsl(var(--primary))',
-                                            padding: isMobile ? '0.15rem 0.55rem' : '0.3rem 0.85rem',
-                                            borderRadius: '999px',
-                                            fontSize: isMobile ? '0.58rem' : '0.7rem',
-                                            fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase',
-                                            whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-                                            display: 'inline-block', maxWidth: '100%',
-                                        }}>
-                                            {member.role}
-                                        </span>
+                                <Link to={`/team/${member.id}`} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
+                                    {/* Image */}
+                                    <div style={{ position: 'relative', height: isMobile ? '150px' : '240px', overflow: 'hidden' }}>
+                                        <img
+                                            src={member.image}
+                                            alt={member.name}
+                                            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', transition: 'transform 0.7s ease' }}
+                                            onMouseEnter={e => !isMobile && (e.target.style.transform = 'scale(1.06)')}
+                                            onMouseLeave={e => e.target.style.transform = 'scale(1)'}
+                                        />
+                                        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%)' }} />
+                                        <div style={{ position: 'absolute', bottom: '0.6rem', left: '0.6rem', right: '0.6rem' }}>
+                                            <span style={{
+                                                background: 'hsl(var(--secondary))', color: 'hsl(var(--primary))',
+                                                padding: isMobile ? '0.15rem 0.55rem' : '0.3rem 0.85rem',
+                                                borderRadius: '999px',
+                                                fontSize: isMobile ? '0.58rem' : '0.7rem',
+                                                fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase',
+                                                whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+                                                display: 'inline-block', maxWidth: '100%',
+                                            }}>
+                                                {member.role}
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
 
-                                {/* Body */}
-                                <div style={{ padding: isMobile ? '0.75rem' : '1.5rem 1.75rem' }}>
-                                    <h3 style={{
-                                        fontSize: isMobile ? '0.875rem' : '1.2rem',
-                                        fontWeight: 800, marginBottom: isMobile ? '0.2rem' : '0.5rem',
-                                        letterSpacing: '-0.02em',
-                                    }}>
-                                        {member.name}
-                                    </h3>
-                                    {!isMobile && (
-                                        <p style={{ fontSize: '0.875rem', color: 'hsl(var(--muted-foreground))', lineHeight: 1.65 }}>
-                                            Local expert with deep knowledge of Kyrgyzstan's mountains, culture, and nomadic traditions.
-                                        </p>
-                                    )}
-                                </div>
+                                    {/* Body */}
+                                    <div style={{ padding: isMobile ? '0.75rem' : '1.5rem 1.75rem' }}>
+                                        <h3 style={{
+                                            fontSize: isMobile ? '0.875rem' : '1.2rem',
+                                            fontWeight: 800, marginBottom: isMobile ? '0.2rem' : '0.5rem',
+                                            letterSpacing: '-0.02em',
+                                        }}>
+                                            {member.name}
+                                        </h3>
+                                        {!isMobile && (
+                                            <p style={{ fontSize: '0.875rem', color: 'hsl(var(--muted-foreground))', lineHeight: 1.65 }}>
+                                                Local expert with deep knowledge of Kyrgyzstan's mountains, culture, and nomadic traditions.
+                                            </p>
+                                        )}
+                                    </div>
+                                </Link>
                             </motion.div>
                         ))}
                     </div>

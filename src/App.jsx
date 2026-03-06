@@ -10,6 +10,7 @@ import AboutUsPage from './pages/AboutUs';
 import Contact from './pages/Contact';
 import TourDetail from './pages/TourDetail';
 import Gallery from './pages/Gallery';
+import GuideProfile from './pages/GuideProfile';
 
 function App() {
   const [bookingOpen, setBookingOpen] = useState(false);
@@ -27,6 +28,7 @@ function App() {
             <Route path="/about" element={<AboutUsPage />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/gallery" element={<Gallery />} />
+            <Route path="/team/:id" element={<GuideProfile />} />
           </Routes>
         </main>
         <Footer />
