@@ -46,7 +46,7 @@ const GuideProfile = () => {
                 background: 'linear-gradient(150deg, hsl(220,42%,14%) 0%, hsl(var(--primary)) 100%)',
                 overflow: 'hidden',
                 paddingTop: isMobile ? '2rem' : '4rem',
-                paddingBottom: isMobile ? '3rem' : '5.5rem',
+                paddingBottom: isMobile ? '5rem' : '5.5rem',
             }}>
                 {/* bg blobs */}
                 <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>

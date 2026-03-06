@@ -358,7 +358,7 @@ const Footer = () => {
                         <p style={{ margin: 0 }}>© 2026 Kyrgyz Riders Travel. All rights reserved.</p>
                         <div style={{ display: 'flex', gap: '1.5rem' }}>
                             <a href="#" style={{ color: '#fff', textDecoration: 'none' }} onMouseEnter={e => e.currentTarget.style.opacity = '1'} onMouseLeave={e => e.currentTarget.style.opacity = '1'}>Privacy Policy</a>
-                            <a href="#" style={{ color: '#fff', textDecoration: 'none' }}>Terms of Service</a>
+                            <Link to="/terms-and-conditions" style={{ color: '#fff', textDecoration: 'none' }}>Terms of Service</Link>
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ScrollToTop from './components/ScrollToTop';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import BookingModal from './components/BookingModal';
@@ -11,12 +12,14 @@ import Contact from './pages/Contact';
 import TourDetail from './pages/TourDetail';
 import Gallery from './pages/Gallery';
 import GuideProfile from './pages/GuideProfile';
+import TermsOfService from './pages/TermsOfService';
 
 function App() {
   const [bookingOpen, setBookingOpen] = useState(false);
 
   return (
     <Router>
+      <ScrollToTop />
       <div className="min-h-screen">
         <Header onBookNow={() => setBookingOpen(true)} />
         <main>
@@ -29,6 +32,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/team/:id" element={<GuideProfile />} />
+            <Route path="/terms-and-conditions" element={<TermsOfService />} />
           </Routes>
         </main>
         <Footer />
