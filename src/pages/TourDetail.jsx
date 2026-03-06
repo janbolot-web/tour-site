@@ -321,10 +321,10 @@ const TourDetail = ({ onBookNow }) => {
     };
 
     const tabs = [
-        { id: 'description', label: 'Description' },
-        { id: 'gallery', label: `Gallery (${tourGallery.length})` },
-        { id: 'packing', label: 'What to Pack?' },
-        { id: 'beforeyougo', label: 'Before You Go' },
+        { id: 'description', label: isMobile ? 'Description' : 'Description' },
+        { id: 'gallery', label: isMobile ? `Gallery (${tourGallery.length})` : `Gallery (${tourGallery.length})` },
+        { id: 'packing', label: isMobile ? 'Packing' : 'What to Pack?' },
+        { id: 'beforeyougo', label: isMobile ? 'Tips' : 'Before You Go' },
     ];
 
     return (
@@ -351,7 +351,7 @@ const TourDetail = ({ onBookNow }) => {
                 </button>
 
                 {/* Hero text */}
-                <div className="container" style={{ position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)', width: '100%', paddingBottom: isMobile ? '1.5rem' : '2.5rem', color: '#fff' }}>
+                <div className="container" style={{ position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)', width: '100%', paddingBottom: isMobile ? '1.5rem' : '2.5rem', paddingLeft: isMobile ? '1.25rem' : '1.5rem', paddingRight: isMobile ? '1.25rem' : '1.5rem', color: '#fff', boxSizing: 'border-box' }}>
                     <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem', flexWrap: 'wrap' }}>
                         <span style={{ background: 'hsl(var(--secondary))', color: 'hsl(var(--primary))', padding: '0.2rem 0.75rem', borderRadius: '999px', fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
                             {tour.category}
@@ -370,7 +370,7 @@ const TourDetail = ({ onBookNow }) => {
             </div>
 
             {/* ── Content + Sidebar ── */}
-            <div className="container" style={{ paddingTop: isMobile ? '1.5rem' : '3rem', paddingBottom: isMobile ? '1.5rem' : '5rem' }}>
+            <div className="container" style={{ paddingTop: isMobile ? '1.5rem' : '3rem', paddingBottom: isMobile ? '1.5rem' : '5rem', paddingLeft: isMobile ? '1.25rem' : '1.5rem', paddingRight: isMobile ? '1.25rem' : '1.5rem', boxSizing: 'border-box' }}>
                 <div style={{
                     display: 'grid',
                     gridTemplateColumns: isTablet ? '1fr' : '1fr 340px',
@@ -537,18 +537,26 @@ const TourDetail = ({ onBookNow }) => {
                     {/* ── Mobile: Sidebar as collapsible section ── */}
                     {isMobile && (
                         <div>
+                            {/* Prominent toggle — looks like a CTA card */}
                             <button
                                 onClick={() => setSidebarOpen(v => !v)}
                                 style={{
-                                    width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                                    padding: '1rem 1.25rem', borderRadius: '1rem',
-                                    background: '#fff', border: '1.5px solid hsl(var(--border))',
-                                    fontFamily: 'inherit', cursor: 'pointer', fontWeight: 700, fontSize: '0.95rem',
+                                    width: '100%', display: 'flex', alignItems: 'center',
+                                    justifyContent: 'space-between', padding: '1rem 1.25rem',
+                                    borderRadius: '1rem',
+                                    background: sidebarOpen ? 'hsl(var(--primary))' : '#fff',
+                                    border: `1.5px solid ${sidebarOpen ? 'hsl(var(--primary))' : 'hsl(var(--border))'}`,
+                                    fontFamily: 'inherit', cursor: 'pointer',
+                                    fontWeight: 700, fontSize: '0.9rem',
+                                    color: sidebarOpen ? '#fff' : 'inherit',
                                     marginBottom: sidebarOpen ? '0.75rem' : 0,
+                                    transition: 'background 0.2s, color 0.2s',
                                 }}
                             >
-                                <span>📋 Tour Details & Pricing</span>
-                                <span style={{ fontWeight: 900, color: 'hsl(var(--primary))', fontSize: '1.1rem' }}>
+                                <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                    📋 {sidebarOpen ? 'Hide Details' : 'View Pricing & Details'}
+                                </span>
+                                <span style={{ fontWeight: 900, fontSize: '1rem', opacity: sidebarOpen ? 0.85 : 1, color: sidebarOpen ? '#fff' : 'hsl(var(--primary))' }}>
                                     {tour.price} {sidebarOpen ? '▲' : '▼'}
                                 </span>
                             </button>
@@ -573,33 +581,36 @@ const TourDetail = ({ onBookNow }) => {
             {isMobile && (
                 <div style={{
                     position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 100,
-                    background: '#fff', borderTop: '1px solid hsl(var(--border))',
-                    boxShadow: '0 -4px 24px rgba(0,0,0,0.08)',
+                    background: 'rgba(255,255,255,0.97)',
+                    backdropFilter: 'blur(12px)',
+                    borderTop: '1px solid hsl(var(--border))',
+                    boxShadow: '0 -4px 24px rgba(0,0,0,0.1)',
                     padding: '0.75rem 1.25rem',
-                    display: 'flex', alignItems: 'center', gap: '0.75rem',
+                    paddingBottom: 'calc(0.75rem + env(safe-area-inset-bottom, 0px))',
+                    display: 'flex', alignItems: 'center', gap: '0.65rem',
                 }}>
-                    <div style={{ flex: 1 }}>
-                        <div style={{ fontSize: '1.25rem', fontWeight: 900, color: 'hsl(var(--primary))', lineHeight: 1 }}>{tour.price}</div>
-                        <div style={{ fontSize: '0.7rem', color: 'hsl(var(--muted-foreground))' }}>per person</div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontSize: '1.2rem', fontWeight: 900, color: 'hsl(var(--primary))', lineHeight: 1, letterSpacing: '-0.02em' }}>{tour.price}</div>
+                        <div style={{ fontSize: '0.65rem', color: 'hsl(var(--muted-foreground))' }}>per person</div>
                     </div>
                     <button
                         onClick={sendWhatsApp}
                         style={{
-                            padding: '0.7rem 1rem', borderRadius: '0.75rem',
+                            padding: '0.7rem 0.9rem', borderRadius: '0.75rem',
                             background: '#25D366', color: '#fff',
-                            fontWeight: 700, fontSize: '0.85rem', border: 'none', cursor: 'pointer',
-                            fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: '0.4rem',
+                            fontWeight: 700, fontSize: '0.82rem', border: 'none', cursor: 'pointer',
+                            fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: '0.35rem',
                             flexShrink: 0,
                         }}
                     >
-                        <Send size={15} /> WhatsApp
+                        <Send size={14} /> WhatsApp
                     </button>
                     <button
                         onClick={onBookNow}
                         style={{
-                            padding: '0.7rem 1.25rem', borderRadius: '0.75rem',
+                            padding: '0.7rem 1.1rem', borderRadius: '0.75rem',
                             background: 'hsl(var(--primary))', color: '#fff',
-                            fontWeight: 700, fontSize: '0.85rem', border: 'none', cursor: 'pointer',
+                            fontWeight: 700, fontSize: '0.82rem', border: 'none', cursor: 'pointer',
                             fontFamily: 'inherit', flexShrink: 0,
                         }}
                     >

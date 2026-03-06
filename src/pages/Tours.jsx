@@ -142,7 +142,7 @@ const Tours = ({ onBookNow }) => {
                 <button
                     onClick={() => setShowVideo(true)}
                     style={{
-                        position: 'absolute', top: '50%', left: '50%',
+                        position: 'absolute', top: isMobile ? '73%' : '50%', left: isMobile ? '75%' : '50%',
                         transform: 'translate(-50%, -50%)',
                         zIndex: 10, background: 'rgba(255,255,255,0.15)',
                         backdropFilter: 'blur(8px)', border: '2px solid rgba(255,255,255,0.4)',
@@ -159,39 +159,50 @@ const Tours = ({ onBookNow }) => {
                     <Play size={isMobile ? 22 : 30} fill="white" />
                 </button>
 
-                <div className="container" style={{ position: 'relative', zIndex: 2, paddingBottom: isMobile ? '2rem' : '8rem', color: '#fff', width: '80%' }}>
+                <div className="container" style={{
+                    position: 'relative', zIndex: 2,
+                    paddingBottom: isMobile ? '5rem' : '8rem',
+                    paddingLeft: isMobile ? '1.25rem' : '1.5rem',
+                    paddingRight: isMobile ? '1.25rem' : '1.5rem',
+                    color: '#fff',
+                    width: isMobile ? '100%' : '80%',
+                    boxSizing: 'border-box',
+                }}>
                     <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
                         <span style={{
-                            display: 'inline-block', padding: '0.25rem 1rem', borderRadius: '999px',
+                            display: 'inline-block', padding: '0.25rem 0.9rem', borderRadius: '999px',
                             background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.3)',
-                            backdropFilter: 'blur(6px)', fontSize: '0.72rem', fontWeight: 700,
-                            letterSpacing: '0.12em', textTransform: 'uppercase',
-                            color: 'hsl(var(--secondary))', marginBottom: '1rem',
+                            backdropFilter: 'blur(6px)', fontSize: isMobile ? '0.65rem' : '0.72rem', fontWeight: 700,
+                            letterSpacing: '0.1em', textTransform: 'uppercase',
+                            color: 'hsl(var(--secondary))', marginBottom: '0.75rem',
                         }}>
                             {toursData.length} Tours Available
                         </span>
                         <h1 style={{
-                            fontSize: isMobile ? 'clamp(1.9rem, 8vw, 2.8rem)' : 'clamp(2.5rem, 6vw, 5.5rem)',
+                            fontSize: isMobile ? 'clamp(1.75rem, 8vw, 2.5rem)' : 'clamp(2.5rem, 6vw, 5.5rem)',
                             fontWeight: 900, letterSpacing: '-0.04em',
-                            marginBottom: '0.6rem', lineHeight: 1.05
+                            marginBottom: isMobile ? '0.5rem' : '0.6rem',
+                            lineHeight: 1.05,
                         }}>
                             Explore Kyrgyzstan <br />
                             <span style={{ color: 'hsl(var(--secondary))' }}>with Us</span>
                         </h1>
-                        {!isMobile && (
-                            <p style={{ fontSize: '1.1rem', opacity: 0.8, maxWidth: '36rem', fontWeight: 300, marginBottom: '1.5rem', lineHeight: 1.7 }}>
-                                Choose a tour or create your own custom itinerary with our local experts.
-                            </p>
-                        )}
+                        <p style={{
+                            fontSize: isMobile ? '0.875rem' : '1.1rem',
+                            opacity: 0.8, maxWidth: '36rem', fontWeight: 300,
+                            marginBottom: isMobile ? '1.25rem' : '1.5rem',
+                            lineHeight: 1.6,
+                        }}>
+                            Choose a tour or build a custom itinerary with our local experts.
+                        </p>
                         <button
                             onClick={onBookNow}
                             style={{
                                 display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
-                                padding: isMobile ? '0.75rem 1.5rem' : '0.9rem 2rem',
+                                padding: isMobile ? '0.7rem 1.4rem' : '0.9rem 2rem',
                                 borderRadius: '0.75rem',
                                 background: 'hsl(var(--secondary))', color: 'hsl(var(--primary))',
-                                fontWeight: 700, fontSize: isMobile ? '0.9rem' : '1rem',
-                                transition: 'transform 0.2s, box-shadow 0.2s',
+                                fontWeight: 700, fontSize: isMobile ? '0.875rem' : '1rem',
                                 boxShadow: '0 4px 16px rgba(0,0,0,0.2)',
                                 border: 'none', cursor: 'pointer', fontFamily: 'inherit',
                             }}
@@ -248,7 +259,7 @@ const Tours = ({ onBookNow }) => {
                 background: '#fff', borderBottom: '1px solid hsl(var(--border))',
                 boxShadow: '0 4px 24px rgba(0,0,0,0.05)',
             }}>
-                <div className="container" style={{ paddingTop: '1rem', paddingBottom: '1rem' }}>
+                <div className="container" style={{ paddingTop: '1rem', paddingBottom: '1rem', paddingLeft: isMobile ? '1rem' : '1.5rem', paddingRight: isMobile ? '1rem' : '1.5rem' }}>
 
                     {/* Mobile: search + toggle button */}
                     {isMobile ? (
@@ -388,7 +399,7 @@ const Tours = ({ onBookNow }) => {
             </div>
 
             {/* ── Tours Listing ── */}
-            <section className="section container">
+            <section className="section container" style={{ paddingLeft: isMobile ? '1rem' : '1.5rem', paddingRight: isMobile ? '1rem' : '1.5rem' }}>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem', marginBottom: '2rem' }}>
                     <h2 style={{ fontSize: isMobile ? '1.35rem' : '1.75rem', fontWeight: 800 }}>
                         {filteredTours.length} {filteredTours.length === 1 ? 'Tour' : 'Tours'}

@@ -313,8 +313,8 @@ export const sightsData = [
 
 export const teamData = [
     {
-        id: 'aman',
-        name: "Aman",
+        id: 'chyngyz',
+        name: "Chyngyz",
         role: "Owner and Founder",
         image: horseTourImg,
     },
@@ -337,8 +337,8 @@ export const teamData = [
         image: panoramaImg,
     },
     {
-        id: 'chyngyz',
-        name: "Chyngyz",
+        id: 'aman',
+        name: "Aman",
         role: "Guide",
         image: horseTourImg,
     },
