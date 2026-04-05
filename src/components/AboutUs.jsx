@@ -48,7 +48,7 @@ const AboutUs = () => {
                             aspectRatio: isTablet ? '16/9' : '4/5',
                             boxShadow: '0 24px 80px rgba(0,0,0,0.15)',
                         }}>
-                            <img src={aboutImg} alt="Kyrgyz Riders" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <img src={aboutImg} alt="TRIPLINE" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                         </div>
 
                         {/* Stats — inline on mobile, floating card on desktop */}
@@ -111,10 +111,10 @@ const AboutUs = () => {
                             fontSize: isMobile ? 'clamp(1.75rem, 7vw, 2.5rem)' : 'clamp(2rem, 4vw, 3.25rem)',
                             fontWeight: 900, letterSpacing: '-0.03em', lineHeight: 1.1, marginBottom: '1.25rem'
                         }}>
-                            We Are <span style={{ color: 'hsl(var(--primary))' }}>Kyrgyz Riders</span>
+                            We Are <span style={{ color: 'hsl(var(--primary))' }}>TRIPLINE</span>
                         </h2>
                         <p style={{ color: 'hsl(var(--muted-foreground))', fontSize: isMobile ? '0.95rem' : '1.05rem', lineHeight: 1.8, marginBottom: '1.25rem' }}>
-                            Founded in 2017 in the village of Kochkor by Aman, a former history teacher, Kyrgyz Riders has grown from a small horseback tour operation into Kyrgyzstan's leading boutique adventure travel company.
+                            Founded in 2017 in the village of Kochkor by Chyngyz, a former history teacher, TRIPLINE has grown from a small horseback tour operation into Kyrgyzstan's leading boutique adventure travel company.
                         </p>
                         <p style={{ color: 'hsl(var(--muted-foreground))', fontSize: isMobile ? '0.95rem' : '1.05rem', lineHeight: 1.8, marginBottom: '2rem' }}>
                             Our tours are intentionally small — 1 to 8 people — so we can travel quietly and authentically, giving full attention to the land and its people.

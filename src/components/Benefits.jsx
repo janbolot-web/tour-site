@@ -39,7 +39,7 @@ const Benefits = () => {
             <div className="container relative z-10">
                 <div className="text-center mb-20">
                     <span className="text-xs font-bold tracking-widest uppercase mb-4 block" style={{ color: 'hsl(var(--secondary))' }}>How It Works</span>
-                    <h2 className="text-4xl md:text-5xl text-white mb-6">Why Travelers Love Kyrgyz Riders</h2>
+                    <h2 className="text-4xl md:text-5xl text-white mb-6">Why Travelers Love TRIPLINE</h2>
                     <p className="max-w-2xl mx-auto text-lg" style={{ color: 'rgba(255,255,255,0.6)' }}>
                         We go beyond just tours — we create meaningful connections with the land and its people.
                     </p>

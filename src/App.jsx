@@ -13,32 +13,37 @@ import TourDetail from './pages/TourDetail';
 import Gallery from './pages/Gallery';
 import GuideProfile from './pages/GuideProfile';
 import TermsOfService from './pages/TermsOfService';
+import AdminPage from './pages/AdminPage';
+import { TourStoreProvider } from './context/TourStoreContext';
 
 function App() {
   const [bookingOpen, setBookingOpen] = useState(false);
 
   return (
-    <Router>
-      <ScrollToTop />
-      <div className="min-h-screen">
-        <Header onBookNow={() => setBookingOpen(true)} />
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/tours" element={<Tours onBookNow={() => setBookingOpen(true)} />} />
-            <Route path="/tours/:id" element={<TourDetail onBookNow={() => setBookingOpen(true)} />} />
-            <Route path="/sights" element={<Sights />} />
-            <Route path="/about" element={<AboutUsPage />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/gallery" element={<Gallery />} />
-            <Route path="/team/:id" element={<GuideProfile />} />
-            <Route path="/terms-and-conditions" element={<TermsOfService />} />
-          </Routes>
-        </main>
-        <Footer />
-        <BookingModal isOpen={bookingOpen} onClose={() => setBookingOpen(false)} />
-      </div>
-    </Router>
+    <TourStoreProvider>
+      <Router>
+        <ScrollToTop />
+        <div className="min-h-screen">
+          <Header onBookNow={() => setBookingOpen(true)} />
+          <main>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/tours" element={<Tours onBookNow={() => setBookingOpen(true)} />} />
+              <Route path="/tours/:id" element={<TourDetail onBookNow={() => setBookingOpen(true)} />} />
+              <Route path="/sights" element={<Sights />} />
+              <Route path="/about" element={<AboutUsPage />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/gallery" element={<Gallery />} />
+              <Route path="/team/:id" element={<GuideProfile />} />
+              <Route path="/terms-and-conditions" element={<TermsOfService />} />
+              <Route path="/admin" element={<AdminPage />} />
+            </Routes>
+          </main>
+          <Footer />
+          <BookingModal isOpen={bookingOpen} onClose={() => setBookingOpen(false)} />
+        </div>
+      </Router>
+    </TourStoreProvider>
   );
 }
 

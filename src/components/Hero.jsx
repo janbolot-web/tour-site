@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import heroImage from '../assets/kyrgyzstan_hero_landscape_1772534628709.png';
+import heroImage from '../assets/0I1A2081.jpg';
+
 
 function useWindowWidth() {
     const [width, setWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);

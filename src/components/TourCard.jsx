@@ -1,5 +1,5 @@
 import React from 'react';
-import { Clock, Calendar, ArrowRight, Gauge } from 'lucide-react';
+import { Clock, Calendar, ArrowRight, Gauge, Mountain } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
@@ -9,7 +9,13 @@ const speedColor = {
     Active: '#ef4444',
 };
 
-const TourCard = ({ id, image, title, category, duration, season, price, description, speed }) => {
+const difficultyConfig = {
+    Easy:     { color: '#16a34a', bg: '#dcfce7', label: 'Easy' },
+    Moderate: { color: '#d97706', bg: '#fef3c7', label: 'Moderate' },
+    Hard:     { color: '#dc2626', bg: '#fee2e2', label: 'Hard' },
+};
+
+const TourCard = ({ id, image, title, category, duration, season, price, description, speed, difficulty }) => {
     return (
         <Link to={`/tours/${id}`} style={{ textDecoration: 'none', display: 'block', height: '100%' }}>
             <motion.div
@@ -89,7 +95,7 @@ const TourCard = ({ id, image, title, category, duration, season, price, descrip
                     )}
 
                     {/* Meta */}
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', marginBottom: '1.25rem' }}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', marginBottom: '0.85rem' }}>
                         <span style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', fontSize: '0.8rem', fontWeight: 600, color: 'hsl(var(--muted-foreground))' }}>
                             <Clock size={14} style={{ color: 'hsl(var(--secondary))' }} />
                             {duration}
@@ -105,6 +111,22 @@ const TourCard = ({ id, image, title, category, duration, season, price, descrip
                             </span>
                         )}
                     </div>
+
+                    {/* Difficulty badge */}
+                    {difficulty && difficultyConfig[difficulty] && (
+                        <div style={{ marginBottom: '1.1rem' }}>
+                            <span style={{
+                                display: 'inline-flex', alignItems: 'center', gap: '0.35rem',
+                                background: difficultyConfig[difficulty].bg,
+                                color: difficultyConfig[difficulty].color,
+                                padding: '0.28rem 0.75rem', borderRadius: '999px',
+                                fontSize: '0.75rem', fontWeight: 700,
+                            }}>
+                                <Mountain size={12} />
+                                Difficulty: {difficultyConfig[difficulty].label}
+                            </span>
+                        </div>
+                    )}
 
                     {/* CTA */}
                     <button style={{

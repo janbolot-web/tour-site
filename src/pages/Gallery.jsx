@@ -1,26 +1,90 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTours } from '../context/TourStoreContext';
 import { X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
-import heroImg from '../assets/kyrgyzstan_hero_landscape_1772534628709.png';
-import horseImg from '../assets/kyrgyzstan_horse_riding_tour_1772534860001.png';
-import lakeImg from '../assets/kyrgyzstan_lake_tour_1772535567087.png';
-import panoramaImg from '../assets/kyrgyzstan_mountain_panorama_1772534959492.png';
+import img1 from '../assets/0I1A2081.jpg';
+import img2 from '../assets/0I1A2101.jpg';
+import img3 from '../assets/0I1A2145.jpg';
+import img4 from '../assets/0I1A2153.jpg';
+import img5 from '../assets/0I1A2168.jpg';
+import img6 from '../assets/0I1A2245.jpg';
+import img7 from '../assets/0I1A2271.jpg';
+import img8 from '../assets/0I1A2335.jpg';
+import img9 from '../assets/0I1A2355.jpg';
+import img10 from '../assets/0I1A2366.jpg';
+import img11 from '../assets/0I1A2400.jpg';
+import img12 from '../assets/0I1A2422.jpg';
+import img13 from '../assets/0I1A2425.jpg';
+import img14 from '../assets/0I1A2426.jpg';
+import img15 from '../assets/0I1A2441.jpg';
+import img16 from '../assets/0I1A2448.jpg';
+import img17 from '../assets/0I1A2488.jpg';
+import img18 from '../assets/0I1A2495.jpg';
+import img19 from '../assets/0I1A2523.jpg';
+import img20 from '../assets/0I1A2560.jpg';
+import img21 from '../assets/0I1A2617.jpg';
+import img22 from '../assets/0I1A2630.jpg';
+import img23 from '../assets/0I1A2652.jpg';
+import img24 from '../assets/0I1A2674.jpg';
+import img25 from '../assets/IMG_3530.jpg';
+import img26 from '../assets/IMG_3542.jpg';
+import img27 from '../assets/IMG_3567.jpg';
+import img28 from '../assets/IMG_3571.jpg';
+import img29 from '../assets/IMG_3574.jpg';
+import img30 from '../assets/IMG_3578.jpg';
+import img31 from '../assets/IMG_3593.jpg';
+import img32 from '../assets/IMG_3781.jpg';
+import img33 from '../assets/IMG_3813.jpg';
+import img34 from '../assets/IMG_3903.jpg';
+import img35 from '../assets/0I1A1778 (1).jpg';
+import img36 from '../assets/0I1A1804.jpg';
+import img37 from '../assets/0I1A1823.jpg';
+import img38 from '../assets/0I1A1918.jpg';
+import img39 from '../assets/0I1A1925.jpg';
+import img40 from '../assets/0I1A1929.jpg';
+import img41 from '../assets/0I1A2044.jpg';
+import img42 from '../assets/0I1A2049.jpg';
+const heroImg = img1;
+const panoramaImg = img2;
+
 
 // ─── Gallery items ────────────────────────────────────────────────────────────
 const photos = [
-    { id: 1, src: heroImg, caption: 'Kyrgyzstan highlands at golden hour', category: 'Landscapes', span: 'wide' },
-    { id: 2, src: horseImg, caption: 'Horseback riding to Song-Kol Lake', category: 'Horse Riding' },
-    { id: 3, src: lakeImg, caption: 'Turquoise waters of Kel-Suu Lake', category: 'Lakes' },
-    { id: 4, src: panoramaImg, caption: 'Tien Shan mountain panorama', category: 'Landscapes', span: 'tall' },
-    { id: 5, src: horseImg, caption: 'Nomadic riders crossing the valley', category: 'Horse Riding', span: 'wide' },
-    { id: 6, src: heroImg, caption: 'Village life in Kochkor valley', category: 'Culture' },
-    { id: 7, src: lakeImg, caption: 'Yurt camp by the alpine lake', category: 'Nomadic Life' },
-    { id: 8, src: panoramaImg, caption: 'High-altitude pass at 3,600 m', category: 'Landscapes' },
-    { id: 9, src: horseImg, caption: 'Sunrise over Song-Kol Lake', category: 'Lakes' },
-    { id: 10, src: heroImg, caption: 'Eagle hunter in traditional dress', category: 'Culture' },
-    { id: 11, src: lakeImg, caption: 'Kyrgyz horsemen at full gallop', category: 'Horse Riding', span: 'wide' },
-    { id: 12, src: panoramaImg, caption: 'Fairy-Tale Canyons, south Ysyk-Kol', category: 'Landscapes' },
+    { id: 1,  src: img1,  caption: 'Kyrgyzstan highlands at golden hour', category: 'Landscapes', span: 'wide' },
+    { id: 2,  src: img35, caption: 'Alpine lake of Kel-Suu, narrow gorge entrance', category: 'Lakes' },
+    { id: 3,  src: img32, caption: 'Song-Kol Lake — summer yurt camp', category: 'Lakes' },
+    { id: 4,  src: img21, caption: 'Horseback riding through the valley', category: 'Horse Riding', span: 'tall' },
+    { id: 5,  src: img22, caption: 'Riders descending from mountain pass', category: 'Horse Riding' },
+    { id: 6,  src: img36, caption: 'Turquoise waters of Kel-Suu canyon lake', category: 'Lakes', span: 'wide' },
+    { id: 7,  src: img37, caption: 'Sheer canyon walls at Kel-Suu gorge', category: 'Landscapes' },
+    { id: 8,  src: img2,  caption: 'Tien Shan mountain panorama', category: 'Landscapes' },
+    { id: 9,  src: img3,  caption: 'Nomadic life on the summer pastures', category: 'Nomadic Life' },
+    { id: 10, src: img4,  caption: 'Traditional yurt interior', category: 'Nomadic Life' },
+    { id: 11, src: img5,  caption: 'Eagle hunter in traditional dress', category: 'Culture' },
+    { id: 12, src: img6,  caption: 'Tash-Rabat caravanserai stone entrance', category: 'Culture', span: 'wide' },
+    { id: 13, src: img7,  caption: 'Tash-Rabat surrounding landscape', category: 'Landscapes' },
+    { id: 14, src: img8,  caption: 'Mountain stream in the valley', category: 'Landscapes' },
+    { id: 15, src: img9,  caption: 'Altyn-Arashan valley views', category: 'Landscapes' },
+    { id: 16, src: img10, caption: 'High-altitude glacier scenery', category: 'Landscapes', span: 'tall' },
+    { id: 17, src: img11, caption: 'Trek through alpine meadows', category: 'Nomadic Life' },
+    { id: 18, src: img38, caption: 'Early morning at the mountain lake', category: 'Lakes' },
+    { id: 19, src: img39, caption: 'Sunset over the Tian Shan peaks', category: 'Landscapes', span: 'wide' },
+    { id: 20, src: img40, caption: 'Nomadic shepherds with their herd', category: 'Nomadic Life' },
+    { id: 21, src: img41, caption: 'Traditional Kyrgyz cuisine preparation', category: 'Culture' },
+    { id: 22, src: img42, caption: 'Kochkor village in the valley', category: 'Culture' },
+    { id: 23, src: img12, caption: 'Local guide on the trail', category: 'Culture' },
+    { id: 24, src: img13, caption: 'Group trekking to Kel-Suu', category: 'Horse Riding' },
+    { id: 25, src: img14, caption: 'Kel-Suu boat crossing', category: 'Lakes', span: 'wide' },
+    { id: 26, src: img15, caption: 'Riders at Song-Kol sunrise', category: 'Horse Riding' },
+    { id: 27, src: img16, caption: 'Wildflowers of Altyn-Arashan valley', category: 'Landscapes' },
+    { id: 28, src: img17, caption: 'Mountain pass crossing at twilight', category: 'Nomadic Life' },
+    { id: 29, src: img18, caption: 'Kyrgyz children welcoming travelers', category: 'Culture' },
+    { id: 30, src: img33, caption: 'Song-Kol camp at dusk', category: 'Nomadic Life', span: 'tall' },
+    { id: 31, src: img34, caption: 'Fairy-Tale Canyons of south Ysyk-Kol', category: 'Landscapes' },
+    { id: 32, src: img23, caption: 'Hot springs of Altyn-Arashan', category: 'Landscapes' },
+    { id: 33, src: img24, caption: 'Mountain guide on the trail', category: 'Culture' },
 ];
+
 
 const CATEGORIES = ['All', 'Landscapes', 'Horse Riding', 'Lakes', 'Nomadic Life', 'Culture'];
 
@@ -125,15 +189,37 @@ function Lightbox({ photos, index, onClose }) {
 const Gallery = () => {
     const [filter, setFilter] = useState('All');
     const [lightboxIndex, setLightboxIndex] = useState(null);
+    const { allTours } = useTours();
 
-    const filtered = filter === 'All' ? photos : photos.filter(p => p.category === filter);
+    const combinedPhotos = React.useMemo(() => {
+        const dynamicPhotos = [];
+        let idCounter = photos.length + 1;
+        
+        allTours.forEach(tour => {
+            if (tour.images && tour.images.length > 0) {
+                tour.images.forEach((url, i) => {
+                    dynamicPhotos.push({
+                        id: idCounter++,
+                        src: url,
+                        caption: i === 0 ? `${tour.title} (Cover)` : `${tour.title}`,
+                        category: tour.category || 'Landscapes',
+                        span: i % 4 === 0 ? 'wide' : undefined,
+                    });
+                });
+            }
+        });
+        
+        return [...photos, ...dynamicPhotos];
+    }, [allTours]);
+
+    const filtered = filter === 'All' ? combinedPhotos : combinedPhotos.filter(p => p.category === filter);
 
     return (
         <div style={{ paddingTop: '80px', minHeight: '100vh' }}>
             {/* Hero */}
 
             <section style={{ position: 'relative', height: '45vh', minHeight: '320px', display: 'flex', alignItems: 'flex-end', overflow: 'hidden' }}>
-                <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(${panoramaImg})`, backgroundSize: 'cover', backgroundPosition: 'center', filter: 'brightness(0.45)' }} />
+            <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(${panoramaImg})`, backgroundSize: 'cover', backgroundPosition: 'center', filter: 'brightness(0.45)' }} />
                 <div className="bg-gradient-hero" style={{ position: 'absolute', inset: 0 }} />
                 <div className="container" style={{ position: 'relative', zIndex: 2, color: '#fff', paddingBottom: '6rem', width: '80%' }}>
                     <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
@@ -144,7 +230,7 @@ const Gallery = () => {
                             letterSpacing: '0.1em', textTransform: 'uppercase',
                             color: 'hsl(var(--secondary))', marginBottom: '1.25rem',
                         }}>
-                            📷 {photos.length} Photos
+                            📷 {combinedPhotos.length} Photos
                         </span>
                         <h1 style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
                             Photo <span style={{ color: 'hsl(var(--secondary))' }}>Gallery</span>
@@ -172,7 +258,7 @@ const Gallery = () => {
                                 borderColor: filter === cat ? 'hsl(var(--primary))' : 'hsl(var(--border))',
                             }}
                         >
-                            {cat} {cat !== 'All' ? `(${photos.filter(p => p.category === cat).length})` : `(${photos.length})`}
+                            {cat} {cat !== 'All' ? `(${combinedPhotos.filter(p => p.category === cat).length})` : `(${combinedPhotos.length})`}
                         </button>
                     ))}
                 </div>

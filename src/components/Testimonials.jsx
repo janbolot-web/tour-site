@@ -32,7 +32,7 @@ const Testimonials = () => {
             <div className="container">
                 <div className="text-center mb-20">
                     <span className="text-xs font-bold tracking-widest uppercase mb-4 block" style={{ color: 'hsl(var(--accent))' }}>Reviews</span>
-                    <h2 className="text-4xl md:text-5xl mb-6">Travelers Love Kyrgyz Riders</h2>
+                    <h2 className="text-4xl md:text-5xl mb-6">Travelers Love TRIPLINE</h2>
                     <p className="max-w-xl mx-auto text-lg" style={{ color: 'hsl(var(--muted-foreground))' }}>
                         Real adventures, real stories. Hear from the people who've explored Kyrgyzstan with us.
                     </p>

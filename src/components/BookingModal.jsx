@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Send, ChevronDown, Check, ArrowRight, ArrowLeft, Shield, Clock, Users } from 'lucide-react';
-import { toursData } from '../data';
+import { useTours } from '../context/TourStoreContext';
 
 const WHATSAPP_NUMBER = '996705660593';
 
@@ -68,6 +68,7 @@ const STEPS = [
 const BookingModal = ({ isOpen, onClose }) => {
     const w = useWindowWidth();
     const isMobile = w < 640;
+    const { allTours } = useTours();
 
     const [step, setStep] = useState(1);
     const [form, setForm] = useState({
@@ -167,7 +168,7 @@ const BookingModal = ({ isOpen, onClose }) => {
                                         {...focusHandlers}
                                     >
                                         <option value="">— Not sure yet, please suggest —</option>
-                                        {toursData.map(t => (
+                                        {allTours.map(t => (
                                             <option key={t.id} value={t.title}>{t.title} · {t.duration}</option>
                                         ))}
                                     </select>

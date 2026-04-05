@@ -1,313 +1,81 @@
-import horseTourImg from './assets/kyrgyzstan_horse_riding_tour_1772534860001.png';
-import lakeTourImg from './assets/kyrgyzstan_lake_tour_1772535567087.png';
-import panoramaImg from './assets/kyrgyzstan_mountain_panorama_1772534959492.png';
-import heroImg from './assets/kyrgyzstan_hero_landscape_1772534628709.png';
+import img1 from './assets/0I1A2081.jpg';
+import img2 from './assets/0I1A2101.jpg';
+import img3 from './assets/0I1A2145.jpg';
+import img4 from './assets/0I1A2153.jpg';
+import img5 from './assets/0I1A2168.jpg';
+import img6 from './assets/0I1A2245.jpg';
+import img7 from './assets/0I1A2271.jpg';
+import img8 from './assets/0I1A2335.jpg';
+import img9 from './assets/0I1A2355.jpg';
+import img10 from './assets/0I1A2366.jpg';
+import img11 from './assets/0I1A2400.jpg';
+import img12 from './assets/0I1A2617.jpg';
+import img13 from './assets/0I1A2630.jpg';
+import img14 from './assets/0I1A2652.jpg';
+import img15 from './assets/0I1A2674.jpg';
+import img16 from './assets/IMG_3530.jpg';
+import img17 from './assets/IMG_3542.jpg';
+import img18 from './assets/IMG_3567.jpg';
+import img19 from './assets/IMG_3571.jpg';
+import img20 from './assets/IMG_3574.jpg';
+import img21 from './assets/IMG_3578.jpg';
+import img22 from './assets/IMG_3593.jpg';
+import img23 from './assets/IMG_3781.jpg';
+import img24 from './assets/IMG_3813.jpg';
+import img25 from './assets/IMG_3903.jpg';
+import img26 from './assets/0I1A1778 (1).jpg';
+import img27 from './assets/0I1A1804.jpg';
+import img28 from './assets/0I1A1823.jpg';
+import img29 from './assets/0I1A1918.jpg';
+import img30 from './assets/0I1A1925.jpg';
+import img31 from './assets/0I1A1929.jpg';
+import img32 from './assets/0I1A2044.jpg';
+import img33 from './assets/0I1A2049.jpg';
 
-export const toursData = [
-    {
-        id: 'elena-taber-7',
-        image: horseTourImg,
-        title: "Elena Taber's Tour",
-        category: "Combined",
-        durationDays: 7,
-        duration: "7 Days",
-        season: "May to October",
-        months: [5, 6, 7, 8, 9, 10],
-        speed: "Moderate",
-        price: "$580",
-        featured: true,
-        description: "Experience a 7-day adventure: two days of horseback riding around Song-Kol Lake with an overnight in a yurt, a scenic road trip, and a two-day trek to Altyn-Arashan hot springs."
-    },
-    {
-        id: 'song-kol-3',
-        image: horseTourImg,
-        title: "Song-Kol Lake on Horseback",
-        category: "Horse Riding",
-        durationDays: 3,
-        duration: "3 Days",
-        season: "May to October",
-        months: [5, 6, 7, 8, 9, 10],
-        speed: "Moderate",
-        price: "$250",
-        featured: true,
-        description: "Embark on a classic 3-day horseback adventure from Kyzart Village to the stunning Song-Kol Lake. Ride through mountain passes and discover nomadic life."
-    },
-    {
-        id: 'song-kol-2',
-        image: horseTourImg,
-        title: "Song-Kol Lake on Horseback",
-        category: "Horse Riding",
-        durationDays: 2,
-        duration: "2 Days",
-        season: "May to October",
-        months: [5, 6, 7, 8, 9, 10],
-        speed: "Easy",
-        price: "$180",
-        featured: false,
-        description: "A 2-day horseback journey from Kyzart Village to Song-Kol Lake. Perfect for nature lovers seeking an authentic horse-riding adventure."
-    },
-    {
-        id: 'kyrgyzstan-week-7',
-        image: panoramaImg,
-        title: "Kyrgyzstan in a Week",
-        category: "Combined",
-        durationDays: 7,
-        duration: "7 Days",
-        season: "May to October",
-        months: [5, 6, 7, 8, 9, 10],
-        speed: "Active",
-        price: "$650",
-        featured: true,
-        description: "The ultimate highlights tour. Ride horseback to alpine Song-Kol Lake, then road-trip to Kel-Suu and Ysyk-Kol — crossing dramatic passes, waterfalls and canyons."
-    },
-    {
-        id: 'ysyk-kol-song-kol-3',
-        image: lakeTourImg,
-        title: "Ysyk-Kol & Song-Kol Road Trip",
-        category: "Road Trip",
-        durationDays: 3,
-        duration: "3 Days",
-        season: "May to October",
-        months: [5, 6, 7, 8, 9, 10],
-        speed: "Easy",
-        price: "$280",
-        featured: false,
-        description: "Short on time? This 3-day road trip covers Kyrgyzstan's must-visit spots: the scenic Ysyk-Kol south shore and an authentic nomadic stay at Song-Kol."
-    },
-    {
-        id: 'winter-song-kol-3',
-        image: panoramaImg,
-        title: "Winter Horseback to Song-Kol",
-        category: "Winter Tours",
-        durationDays: 3,
-        duration: "3 Days",
-        season: "November to April",
-        months: [11, 12, 1, 2, 3, 4],
-        speed: "Moderate",
-        price: "$300",
-        featured: false,
-        description: "Experience Kyrgyzstan's frozen highlands on a winter horseback journey to Song-Kol Lake. Ride through snowy passes and sleep in warm yurts."
-    },
-    {
-        id: 'ysyk-kol-3',
-        image: lakeTourImg,
-        title: "Ysyk-Kol Lake Road Trip",
-        category: "Road Trip",
-        durationDays: 3,
-        duration: "3 Days",
-        season: "All Year",
-        months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-        speed: "Easy",
-        price: "$260",
-        featured: false,
-        description: "Discover the Pearl of Kyrgyzstan on a captivating 3-day road trip. Explore both shores, Fairy-Tale Canyons, and a cozy yurt stay."
-    },
-    {
-        id: 'family-tour-4',
-        image: lakeTourImg,
-        title: "Kyrgyzstan Family Tour",
-        category: "Road Trip",
-        durationDays: 4,
-        duration: "4 Days",
-        season: "May to October",
-        months: [5, 6, 7, 8, 9, 10],
-        speed: "Easy",
-        price: "$420",
-        featured: false,
-        description: "A family-friendly tour with easy travel, no challenging driving. Explore Chong-Kemin Park, Ysyk-Kol Lake, and spend a night at Song-Kol."
-    },
-    {
-        id: 'song-kol-4-horse',
-        image: horseTourImg,
-        title: "Song-Kol Lake on Horseback",
-        category: "Horse Riding",
-        durationDays: 4,
-        duration: "4 Days",
-        season: "May to October",
-        months: [5, 6, 7, 8, 9, 10],
-        speed: "Moderate",
-        price: "$340",
-        featured: false,
-        description: "A 4-day horseback trek through the Kilemche Valley to Song-Kol Lake. Ideal for nature enthusiasts seeking a genuine horse-riding experience."
-    },
-    {
-        id: 'express-tour-4',
-        image: panoramaImg,
-        title: "Kyrgyzstan Express Tour",
-        category: "Combined",
-        durationDays: 4,
-        duration: "4 Days",
-        season: "May to October",
-        months: [5, 6, 7, 8, 9, 10],
-        speed: "Active",
-        price: "$460",
-        featured: false,
-        description: "A fast-paced express tour to Song-Kol Lake, Kel-Suu Lake, and Ysyk-Kol. Perfect for travelers who want maximum scenery in minimal time."
-    },
-    {
-        id: 'discover-5',
-        image: heroImg,
-        title: "Discover Kyrgyzstan",
-        category: "Road Trip",
-        durationDays: 5,
-        duration: "5 Days",
-        season: "May to October",
-        months: [5, 6, 7, 8, 9, 10],
-        speed: "Easy",
-        price: "$500",
-        featured: false,
-        description: "A 5-day road trip visiting Song-Kol, Ysyk-Kol, and Altyn-Arashan. Nomadic rural life, alpine landscapes, and traditional yurt stays."
-    },
-    {
-        id: 'horseback-5',
-        image: horseTourImg,
-        title: "Kyrgyzstan Horseback Riding Tour",
-        category: "Horse Riding",
-        durationDays: 5,
-        duration: "5 Days",
-        season: "May to October",
-        months: [5, 6, 7, 8, 9, 10],
-        speed: "Moderate",
-        price: "$480",
-        featured: false,
-        description: "3 days riding to Song-Kol Lake, then explore the scenic south shore of Ysyk-Kol. Embrace nomadic culture and unforgettable mountain trails."
-    },
-    {
-        id: 'authentic-horseback-5',
-        image: horseTourImg,
-        title: "Authentic Horseback Riding Tour",
-        category: "Horse Riding",
-        durationDays: 5,
-        duration: "5 Days",
-        season: "June to September",
-        months: [6, 7, 8, 9],
-        speed: "Active",
-        price: "$520",
-        featured: false,
-        description: "Ride through remote mountains, sleep in yurts with nomadic families. Discover Kyrgyzstan beyond tourism — raw landscapes and genuine human connections."
-    },
-    {
-        id: 'active-5',
-        image: panoramaImg,
-        title: "Active Kyrgyzstan",
-        category: "Combined",
-        durationDays: 5,
-        duration: "5 Days",
-        season: "May to October",
-        months: [5, 6, 7, 8, 9, 10],
-        speed: "Active",
-        price: "$540",
-        featured: false,
-        description: "2 days horseback to Song-Kol, then Ysyk-Kol south shore, then a 2-day trek to Altyn-Arashan. A fast-paced tour for active highlights seekers."
-    },
-    {
-        id: 'horseback-6',
-        image: horseTourImg,
-        title: "Kyrgyzstan Horseback Riding Tour",
-        category: "Horse Riding",
-        durationDays: 6,
-        duration: "6 Days",
-        season: "May to October",
-        months: [5, 6, 7, 8, 9, 10],
-        speed: "Moderate",
-        price: "$580",
-        featured: false,
-        description: "4 days riding to Song-Kol Lake, relax in a guesthouse, then explore Ysyk-Kol south shore on horseback. Wide skies and memorable mountain paths."
-    },
-    {
-        id: 'active-6',
-        image: panoramaImg,
-        title: "Active Kyrgyzstan",
-        category: "Combined",
-        durationDays: 6,
-        duration: "6 Days",
-        season: "May to October",
-        months: [5, 6, 7, 8, 9, 10],
-        speed: "Active",
-        price: "$620",
-        featured: false,
-        description: "3 days horseback to Song-Kol, Ysyk-Kol south shore, and a 2-day trek to Altyn-Arashan valley — stunning alpine adventure."
-    },
-    {
-        id: 'tien-shan-7',
-        image: panoramaImg,
-        title: "Tien Shan Mountains Trek",
-        category: "Hiking",
-        durationDays: 7,
-        duration: "7 Days",
-        season: "July to August",
-        months: [7, 8],
-        speed: "Active",
-        price: "$550",
-        featured: true,
-        description: "A high-altitude trek through the heart of the Celestial Mountains. Experience glaciers, alpine meadows, and breathtaking passes."
-    },
-    {
-        id: 'ultimate-road-trip-7',
-        image: heroImg,
-        title: "Kyrgyzstan Ultimate Road Trip",
-        category: "Road Trip",
-        durationDays: 7,
-        duration: "7 Days",
-        season: "May to October",
-        months: [5, 6, 7, 8, 9, 10],
-        speed: "Moderate",
-        price: "$700",
-        featured: false,
-        description: "Visit Song-Kol Lake, remote Kel-Suu, and Altyn-Arashan Gorge. A week-long road trip through Kyrgyzstan's top must-see destinations."
-    },
-    {
-        id: 'best-of-8',
-        image: lakeTourImg,
-        title: "Best of Kyrgyzstan",
-        category: "Combined",
-        durationDays: 8,
-        duration: "8 Days",
-        season: "May to October",
-        months: [5, 6, 7, 8, 9, 10],
-        speed: "Moderate",
-        price: "$780",
-        featured: false,
-        description: "2 days horseback to Song-Kol, a scenic road trip to remote Kel-Suu, and easy trekking in Altyn-Arashan with natural hot springs."
-    }
-];
+// Aliases for readability
+const heroImg = img1;        // mountain panorama
+const lakeTourImg = img23;   // Song-Kol lake
+const horseTourImg = img12;  // horse riding
+const panoramaImg = img2;    // mountain panorama 2
+
+export const toursData = [];
 
 export const sightsData = [
     {
         id: 'song-kol-lake',
         name: "Song-Kol Lake",
         description: "A high-altitude alpine lake surrounded by lush summer pastures and nomadic yurts.",
-        image: lakeTourImg,
+        image: img23,
     },
     {
         id: 'kel-suu-lake',
         name: "Kel-Suu Lake",
         description: "One of the most beautiful and remote lakes in the world, famous for its turquoise water and sheer cliffs.",
-        image: horseTourImg,
+        image: img26,
     },
     {
         id: 'tash-rabat',
         name: "Tash-Rabat",
         description: "A 15th-century stone caravansarai that once served as a sanctuary for Silk Road travelers.",
-        image: panoramaImg,
+        image: img6,
     },
     {
         id: 'altyn-arashan',
         name: "Altyn-Arashan Valley",
         description: "Famous for its natural hot springs and stunning views of the Palatka Peak.",
-        image: heroImg,
+        image: img12,
     },
     {
         id: 'karakol-city',
         name: "Karakol City",
         description: "A historic city known for its unique wooden mosque and Russian Orthodox cathedral.",
-        image: lakeTourImg,
+        image: img18,
     },
     {
         id: 'ysyk-kol-lake',
         name: "Ysyk-Kol Lake",
         description: "The second largest alpine lake in the world, which never freezes even in winter.",
-        image: panoramaImg,
+        image: img1,
     }
 ];
 
@@ -316,12 +84,12 @@ export const teamData = [
         id: 'chyngyz',
         name: "Chyngyz",
         role: "Owner & Founder",
-        image: horseTourImg,
+        image: img16,
         years: 9,
         nationality: "Kyrgyz",
         languages: ["Kyrgyz", "Russian", "English"],
         specialties: ["Horseback Tours", "Song-Kol Lake", "Nomadic Culture", "Leadership"],
-        bio: "Chyngyz was born in the Naryn region and grew up among the mountains and yurt camps that now define his tours. After studying tourism management in Bishkek, he returned to his roots and founded Kyrgyz Riders in 2017 with a simple mission: to share the authentic nomadic spirit of Kyrgyzstan with the world.\n\nWith over 9 years of guiding experience, Chyngyz has led hundreds of travelers through Song-Kol Lake, the Tian Shan peaks, and the wide open jailoos of Central Kyrgyzstan. His deep knowledge of Kyrgyz history, horse culture, and traditional hospitality makes every journey feel genuinely personal.\n\nHe is fluent in Kyrgyz, Russian, and English, and is known for his warmth, patience, and extraordinary horsemanship.",
+        bio: "Chyngyz was born in the Naryn region and grew up among the mountains and yurt camps that now define his tours. After studying tourism management in Bishkek, he returned to his roots and founded TRIPLINE in 2017 with a simple mission: to share the authentic nomadic spirit of Kyrgyzstan with the world.\n\nWith over 9 years of guiding experience, Chyngyz has led hundreds of travelers through Song-Kol Lake, the Tian Shan peaks, and the wide open jailoos of Central Kyrgyzstan. His deep knowledge of Kyrgyz history, horse culture, and traditional hospitality makes every journey feel genuinely personal.\n\nAn active English teacher, he is fluent in Kyrgyz, Russian, and English, and is known for his warmth, patience, and extraordinary horsemanship.",
         whatsapp: "https://wa.me/996705660593",
         featured: true,
     },
@@ -329,12 +97,12 @@ export const teamData = [
         id: 'gulina',
         name: "Gulina",
         role: "Project Manager",
-        image: lakeTourImg,
+        image: img20,
         years: 5,
         nationality: "Kyrgyz",
         languages: ["Kyrgyz", "Russian", "English"],
         specialties: ["Tour Planning", "Logistics", "Client Relations", "Itinerary Design"],
-        bio: "Gulina is the organizational backbone of Kyrgyz Riders. With a background in event management and a passion for tourism, she coordinates every detail — from accommodation bookings to permit administration — so that every tour runs seamlessly.\n\nShe joined the team in 2020 and quickly became indispensable, building relationships with guesthouses, yurt camp families, and transport partners across the country. Travelers often say Gulina's meticulous planning made their trip feel effortless.\n\nFluent in three languages, she is always available to help guests with any questions before or during their journey.",
+        bio: "Gulina is the organizational backbone of TRIPLINE. With a background in event management and a passion for tourism, she coordinates every detail — from accommodation bookings to permit administration — so that every tour runs seamlessly.\n\nShe joined the team in 2020 and quickly became indispensable, building relationships with guesthouses, yurt camp families, and transport partners across the country. Travelers often say Gulina's meticulous planning made their trip feel effortless.\n\nFluent in three languages, she is always available to help guests with any questions before or during their journey.",
         whatsapp: "https://wa.me/996705660593",
         featured: false,
     },
@@ -342,12 +110,12 @@ export const teamData = [
         id: 'adina',
         name: "Adina",
         role: "Office Manager",
-        image: heroImg,
+        image: img22,
         years: 4,
         nationality: "Kyrgyz",
         languages: ["Kyrgyz", "Russian", "English"],
         specialties: ["Customer Support", "Booking Management", "Communications", "Social Media"],
-        bio: "Adina is often the first voice travelers hear when they reach out to Kyrgyz Riders. Her warm and responsive communication style has earned glowing reviews and helped convert countless inquiries into life-changing journeys.\n\nWith a degree in international relations and four years on the team, she manages all incoming bookings, coordinates with guides, and ensures that every client feels confident and cared for from day one.\n\nShe also manages the company's social media presence, sharing stories and photos that inspire travelers around the world.",
+        bio: "Adina is often the first voice travelers hear when they reach out to TRIPLINE. Her warm and responsive communication style has earned glowing reviews and helped convert countless inquiries into life-changing journeys.\n\nWith a degree in international relations and four years on the team, she manages all incoming bookings, coordinates with guides, and ensures that every client feels confident and cared for from day one.\n\nShe also manages the company's social media presence, sharing stories and photos that inspire travelers around the world.",
         whatsapp: "https://wa.me/996705660593",
         featured: false,
     },
@@ -355,7 +123,7 @@ export const teamData = [
         id: 'baiysh',
         name: "Baiysh",
         role: "Senior Mountain Guide",
-        image: panoramaImg,
+        image: img9,
         years: 7,
         nationality: "Kyrgyz",
         languages: ["Kyrgyz", "Russian", "English"],
@@ -368,12 +136,12 @@ export const teamData = [
         id: 'aman',
         name: "Aman",
         role: "Horse Riding Guide",
-        image: horseTourImg,
+        image: img13,
         years: 6,
         nationality: "Kyrgyz",
         languages: ["Kyrgyz", "Russian", "English"],
         specialties: ["Horseback Riding", "Song-Kol", "Kochkor Valley", "Eagle Hunting"],
-        bio: "Aman was practically born in the saddle. Raised in Kochkor Village, he learned to ride before he could read and spent his childhood herding horses across the jailoos of central Kyrgyzstan.\n\nHe joined Kyrgyz Riders six years ago and now leads the company's most popular horseback expeditions to Song-Kol Lake. His ability to read horses and match riders to the right animal ensures everyone — beginners and experienced riders alike — feels safe and confident in the mountains.\n\nAman also has deep knowledge of eagle hunting traditions and can organize demonstration sessions with local hunters along the route.",
+        bio: "Aman was practically born in the saddle. Raised in Kochkor Village, he learned to ride before he could read and spent his childhood herding horses across the jailoos of central Kyrgyzstan.\n\nHe joined TRIPLINE six years ago and now leads the company's most popular horseback expeditions to Song-Kol Lake. His ability to read horses and match riders to the right animal ensures everyone — beginners and experienced riders alike — feels safe and confident in the mountains.\n\nAman also has deep knowledge of eagle hunting traditions and can organize demonstration sessions with local hunters along the route.",
         whatsapp: "https://wa.me/996705660593",
         featured: false,
     },
@@ -381,7 +149,7 @@ export const teamData = [
         id: 'adil',
         name: "Adil",
         role: "Vehicle & Trekking Guide",
-        image: lakeTourImg,
+        image: img11,
         years: 5,
         nationality: "Kyrgyz",
         languages: ["Kyrgyz", "Russian", "English"],

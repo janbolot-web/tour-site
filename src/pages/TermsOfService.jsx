@@ -17,14 +17,14 @@ const SECTIONS = [
     {
         id: 'acceptance',
         title: '1. Acceptance of Terms',
-        body: `By accessing or using the services offered by Kyrgyz Riders Travel ("we", "us", or "our"), including our website and tour booking services, you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, please do not use our services.
+        body: `By accessing or using the services offered by TRIPLINE Travel ("we", "us", or "our"), including our website and tour booking services, you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, please do not use our services.
 
 These Terms apply to all visitors, users, and customers who access or use our services. We reserve the right to update or modify these Terms at any time without prior notice. Your continued use of our services following any changes constitutes your acceptance of the revised Terms.`,
     },
     {
         id: 'services',
         title: '2. Services Description',
-        body: `Kyrgyz Riders Travel provides guided tour packages, horseback riding expeditions, trekking excursions, road trips, and related travel services throughout Kyrgyzstan. Our services include, but are not limited to:
+        body: `TRIPLINE Travel provides guided tour packages, horseback riding expeditions, trekking excursions, road trips, and related travel services throughout Kyrgyzstan. Our services include, but are not limited to:
 
 • Guided multi-day tour packages
 • Horseback riding experiences to Song-Kol Lake and surrounding regions
@@ -59,7 +59,7 @@ By making a booking, you confirm that you are of legal age to enter into a bindi
 • Cancellation 8–14 days before departure: 75% of total tour price forfeited
 • Cancellation 7 days or less before departure: No refund
 
-In the event that Kyrgyz Riders Travel cancels a tour due to safety concerns, extreme weather, or unforeseen circumstances, you will receive a full refund or the option to reschedule at no additional charge.
+In the event that TRIPLINE Travel cancels a tour due to safety concerns, extreme weather, or unforeseen circumstances, you will receive a full refund or the option to reschedule at no additional charge.
 
 We strongly recommend purchasing comprehensive travel insurance that includes trip cancellation coverage.`,
     },
@@ -77,7 +77,7 @@ High-altitude tours may reach elevations above 3,500 metres. Participants should
         title: '6. Limitation of Liability',
         body: `Participation in adventure travel and outdoor activities involves inherent risks, including but not limited to: personal injury, illness, property damage, and death. By booking our services, you acknowledge and accept these risks.
 
-Kyrgyz Riders Travel shall not be liable for:
+TRIPLINE Travel shall not be liable for:
 • Personal injury, illness, or death arising from participation in tour activities
 • Loss or damage to personal property
 • Delays, missed connections, or itinerary changes due to weather, political events, or other factors outside our control
@@ -95,7 +95,7 @@ To the maximum extent permitted by applicable law, our total liability to you fo
 • Personal liability
 • Loss or theft of personal belongings
 
-Kyrgyz Riders Travel does not provide travel insurance and is not responsible for any costs arising from events that would typically be covered by a travel insurance policy. Please ensure your policy is valid for adventure and high-altitude activities.`,
+TRIPLINE Travel does not provide travel insurance and is not responsible for any costs arising from events that would typically be covered by a travel insurance policy. Please ensure your policy is valid for adventure and high-altitude activities.`,
     },
     {
         id: 'conduct',
@@ -171,7 +171,7 @@ const TermsOfService = () => {
                             Terms of Service
                         </h1>
                         <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: isMobile ? '0.875rem' : '1rem', lineHeight: 1.65, maxWidth: '560px' }}>
-                            Please read these terms carefully before booking a tour with Kyrgyz Riders Travel. By completing a booking, you agree to all conditions outlined below.
+                            Please read these terms carefully before booking a tour with TRIPLINE Travel. By completing a booking, you agree to all conditions outlined below.
                         </p>
                         <div style={{ marginTop: '1.25rem', fontSize: '0.75rem', color: 'rgba(255,255,255,0.35)' }}>
                             Last updated: March 2026

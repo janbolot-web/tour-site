@@ -2,7 +2,8 @@ import React, { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { teamData } from '../data';
-import heroImg from '../assets/kyrgyzstan_hero_landscape_1772534628709.png';
+import heroImg from '../assets/0I1A2081.jpg';
+
 import { Users, History, Heart, Globe } from 'lucide-react';
 
 function useWindowWidth() {
@@ -76,7 +77,7 @@ const AboutUs = () => {
                             color: 'hsl(var(--secondary))',
                             marginBottom: isMobile ? '0.75rem' : '1.5rem',
                         }}>
-                            Our Identity
+                            Our Story
                         </span>
                         <h1 style={{
                             fontSize: isMobile ? 'clamp(1.75rem, 9vw, 2.8rem)' : 'clamp(2.5rem, 7vw, 5.5rem)',
@@ -84,15 +85,15 @@ const AboutUs = () => {
                             marginBottom: isMobile ? '0.75rem' : '1.25rem',
                             lineHeight: 1.05,
                         }}>
-                            Authentic <span style={{ color: 'hsl(var(--secondary))' }}>Spirit</span>
+                            About <span style={{ color: 'hsl(var(--secondary))' }}>Tripline</span>
                         </h1>
                         <p style={{
                             fontSize: isMobile ? '0.9rem' : '1.2rem',
-                            opacity: 0.85, maxWidth: '38rem', margin: '0 auto',
+                            opacity: 0.85, maxWidth: '42rem', margin: '0 auto',
                             fontWeight: 300, lineHeight: 1.65,
                             padding: isMobile ? '0 0.5rem' : 0,
                         }}>
-                            Since 2017, we've been sharing the raw beauty of Kyrgyzstan with the world through nomadic eyes.
+                            Born from a love of mountains and people — guiding travelers through the real Kyrgyzstan since 2017.
                         </p>
                     </motion.div>
                 </div>
@@ -123,24 +124,88 @@ const AboutUs = () => {
                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'hsl(var(--accent))', marginBottom: '1rem' }}>
                                 <History size={isMobile ? 20 : 24} />
                                 <span style={{ fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', fontSize: isMobile ? '0.72rem' : '0.875rem' }}>
-                                    Founded in 2017
+                                    Guiding since 2017 · Founded 2026
                                 </span>
                             </div>
+
+                            {/* We Are TRIPLINE intro */}
                             <h2 style={{
                                 fontSize: isMobile ? 'clamp(1.5rem, 6vw, 2rem)' : 'clamp(2rem, 4vw, 3rem)',
                                 fontWeight: 900, letterSpacing: '-0.03em',
-                                marginBottom: isMobile ? '1.5rem' : '2rem',
+                                marginBottom: isMobile ? '0.75rem' : '1rem',
                                 lineHeight: 1.15,
                             }}>
-                                A Journey of Passion and Heritage
+                                We Are <span style={{ color: 'hsl(var(--accent))' }}>TRIPLINE</span>
                             </h2>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '1rem' : '1.5rem', color: 'hsl(var(--muted-foreground))', fontSize: isMobile ? '0.9rem' : '1.05rem', lineHeight: 1.7 }}>
+                            <p style={{ color: 'hsl(var(--muted-foreground))', fontSize: isMobile ? '0.9rem' : '1.05rem', lineHeight: 1.7, marginBottom: isMobile ? '1rem' : '1.5rem' }}>
+                                Founded in 2017 in the village of Kochkor by Chyngyz, a former history teacher, TRIPLINE has grown from a small horseback tour operation into Kyrgyzstan's leading boutique adventure travel company.
+                            </p>
+                            <p style={{ color: 'hsl(var(--muted-foreground))', fontSize: isMobile ? '0.9rem' : '1.05rem', lineHeight: 1.7, marginBottom: isMobile ? '1rem' : '1.5rem' }}>
+                                Our tours are intentionally small — 1 to 8 people — so we can travel quietly and authentically, giving full attention to the land and its people.
+                            </p>
+
+                            {/* 3 pillars */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginBottom: isMobile ? '1.25rem' : '2rem' }}>
+                                {[
+                                    'Local guides born and raised in the mountains',
+                                    'Private & custom itineraries only',
+                                    'Supporting nomadic families & communities',
+                                ].map(item => (
+                                    <div key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem' }}>
+                                        <span style={{ color: 'hsl(var(--secondary))', fontWeight: 900, fontSize: '1.1rem', lineHeight: 1.4, flexShrink: 0 }}>✦</span>
+                                        <span style={{ color: 'hsl(var(--foreground))', fontSize: isMobile ? '0.875rem' : '1rem', fontWeight: 500, lineHeight: 1.55 }}>{item}</span>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Divider */}
+                            <div style={{ borderTop: '1px solid hsl(var(--border))', marginBottom: isMobile ? '1.25rem' : '2rem' }} />
+
+                            {/* About Tripline Kyrgyzstan sub-heading */}
+                            <h3 style={{
+                                fontSize: isMobile ? '1.1rem' : '1.4rem',
+                                fontWeight: 800, letterSpacing: '-0.02em',
+                                marginBottom: isMobile ? '1rem' : '1.25rem',
+                                color: 'hsl(var(--primary))',
+                            }}>
+                                About Tripline Kyrgyzstan
+                            </h3>
+
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '0.85rem' : '1.25rem', color: 'hsl(var(--muted-foreground))', fontSize: isMobile ? '0.9rem' : '1.05rem', lineHeight: 1.7 }}>
                                 <p>
-                                    Kyrgyz Riders was born in the heart of the mountains, in the village of Kochkor. Founded by Aman — a former history teacher — our company started with a simple vision: to share the authentic nomadic lifestyle that defines our people.
+                                    After five years of studying at Kyrgyz National University, I returned to my home region — a small village in Kochkor district — to work as a German language teacher at a local school. At that time, my friend Amantur, a manager at Kyrgyz Riders, suggested that I try working as a tour guide.
                                 </p>
                                 <p>
-                                    What began as a small operation with just four people offering horseback tours to Song-Kol Lake has evolved into a leading adventure travel company. Today, our team of 15+ experts manages expeditions across the most remote corners of Central Asia.
+                                    In 2017, I started guiding travelers, and that is when my true love for nature and tourism began. Working as a guide allowed me to see how deeply people from all over the world admire the beauty of Kyrgyzstan — the majestic mountains of the Tien Shan, endless alpine pastures, the nomadic culture, and the warm hospitality of local people. Seeing my country through the eyes of travelers inspired me to share this experience in a deeper way.
                                 </p>
+                                <p>
+                                    In 2021, the first idea of creating my own tourism company was born. After several years of experience and preparation, in 2026 we officially founded Tripline Kyrgyzstan.
+                                </p>
+
+                                {/* Today we help */}
+                                <div>
+                                    <p style={{ color: 'hsl(var(--foreground))', fontWeight: 600, marginBottom: '0.6rem' }}>
+                                        Today our team helps travelers discover the real Kyrgyzstan:
+                                    </p>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                                        {[
+                                            'Scenic mountain routes',
+                                            'Traditional nomadic culture',
+                                            'Unique nature and alpine lakes',
+                                            'The sincere hospitality of local communities',
+                                        ].map(item => (
+                                            <div key={item} style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start' }}>
+                                                <span style={{ color: 'hsl(var(--secondary))', fontWeight: 700, flexShrink: 0 }}>•</span>
+                                                <span>{item}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <p>
+                                    Our mission is to develop sustainable tourism, support local communities, and show Kyrgyzstan the way we truly love it.
+                                </p>
+
                                 <p style={{
                                     fontStyle: 'italic',
                                     borderLeft: '4px solid hsl(var(--secondary))',
@@ -148,8 +213,9 @@ const AboutUs = () => {
                                     paddingTop: '0.5rem', paddingBottom: '0.5rem',
                                     background: 'hsl(var(--muted)/0.3)',
                                     borderRadius: '0 0.75rem 0.75rem 0',
+                                    color: 'hsl(var(--foreground))',
                                 }}>
-                                    "We don't just guide tours; we welcome you into our home, our culture, and our history."
+                                    "We believe that every journey is more than just a trip — it is a story that stays in your heart for a lifetime."
                                 </p>
                             </div>
                         </motion.div>
@@ -169,7 +235,7 @@ const AboutUs = () => {
                                 boxShadow: '0 24px 64px rgba(0,0,0,0.2)',
                                 position: 'relative', zIndex: 10,
                             }}>
-                                <img src={heroImg} alt="Kyrgyz Riders team" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                <img src={heroImg} alt="TRIPLINE team" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%)' }} />
                             </div>
 
@@ -189,8 +255,8 @@ const AboutUs = () => {
                                     borderRadius: '2rem', boxShadow: '0 16px 48px rgba(0,0,0,0.12)',
                                     zIndex: 20, border: '1px solid hsl(var(--border))',
                                 }}>
-                                    <div style={{ fontSize: '3rem', fontWeight: 900, color: 'hsl(var(--primary))', lineHeight: 1 }}>15+</div>
-                                    <div style={{ fontSize: '0.78rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'hsl(var(--muted-foreground))', marginTop: '0.25rem' }}>Local Experts</div>
+                                    <div style={{ fontSize: '3rem', fontWeight: 900, color: 'hsl(var(--primary))', lineHeight: 1 }}>2017</div>
+                                    <div style={{ fontSize: '0.78rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'hsl(var(--muted-foreground))', marginTop: '0.25rem' }}>Guiding Since</div>
                                 </div>
                             )}
 
@@ -201,9 +267,9 @@ const AboutUs = () => {
                                     justifyContent: isMobile ? 'center' : 'flex-start',
                                 }}>
                                     {[
-                                        { num: '15+', label: 'Local Experts' },
-                                        { num: '7+', label: 'Years Experience' },
-                                        { num: '500+', label: 'Happy Travelers' },
+                                        { num: '2017', label: 'Guiding Since' },
+                                        { num: '8+', label: 'Years of Experience' },
+                                        { num: '2026', label: 'Company Founded' },
                                     ].map(s => (
                                         <div key={s.label} style={{
                                             background: '#fff', borderRadius: '1rem',
@@ -250,9 +316,9 @@ const AboutUs = () => {
                         </h2>
                         <p style={{
                             fontSize: isMobile ? '0.9rem' : '1.1rem',
-                            opacity: 0.7, maxWidth: '38rem', margin: '0 auto', lineHeight: 1.7,
+                            opacity: 0.7, maxWidth: '42rem', margin: '0 auto', lineHeight: 1.7,
                         }}>
-                            Built on the principles of nomadic hospitality and environmental stewardship.
+                            Our mission is to develop sustainable tourism, support local communities, and show Kyrgyzstan the way we truly love it.
                         </p>
                     </div>
 
@@ -262,9 +328,9 @@ const AboutUs = () => {
                         gap: isMobile ? '1rem' : '2rem',
                     }}>
                         {[
-                            { icon: <Heart size={isMobile ? 24 : 32} />, title: 'Authenticity', desc: 'We stay away from mass tourism. Our tours are private and tailored to give you a genuine connection with local people.' },
-                            { icon: <Globe size={isMobile ? 24 : 32} />, title: 'Sustainability', desc: 'We partner with local families to build yurt camps and homestays, ensuring tourism benefits the communities directly.' },
-                            { icon: <Users size={isMobile ? 24 : 32} />, title: 'Local Growth', desc: 'We train young men from mountain villages, providing them with professional skills and career opportunities.' },
+                            { icon: <Heart size={isMobile ? 24 : 32} />, title: 'Scenic Mountain Routes', desc: 'We take you through breathtaking passes, high-altitude meadows and valleys that most travelers never see.' },
+                            { icon: <Globe size={isMobile ? 24 : 32} />, title: 'Sustainable Tourism', desc: 'We develop tourism responsibly, working with local communities and protecting the nature we love so much.' },
+                            { icon: <Users size={isMobile ? 24 : 32} />, title: 'Nomadic Culture', desc: 'Unique nature, alpine lakes, and the sincere hospitality of local communities — a journey that stays in your heart.' },
                         ].map((value, i) => (
                             <motion.div
                                 key={i}
@@ -325,7 +391,7 @@ const AboutUs = () => {
                             fontSize: isMobile ? 'clamp(1.5rem, 6vw, 2.2rem)' : 'clamp(1.75rem, 4vw, 3rem)',
                             fontWeight: 900, letterSpacing: '-0.03em', marginBottom: '0.75rem',
                         }}>
-                            The Faces of Kyrgyz Riders
+                            The Faces of TRIPLINE
                         </h2>
                         <p style={{
                             color: 'hsl(var(--muted-foreground))', maxWidth: '36rem', margin: '0 auto',

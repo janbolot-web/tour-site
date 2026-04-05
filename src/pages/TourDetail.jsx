@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { Clock, Calendar, Users, MapPin, ArrowLeft, Check, ChevronDown, ChevronUp, Send, ZoomIn, X, ChevronLeft, ChevronRight } from 'lucide-react';
-import { toursData } from '../data';
+import { Clock, Calendar, Users, MapPin, ArrowLeft, Check, ChevronDown, ChevronUp, Send, ZoomIn, X, ChevronLeft, ChevronRight, Mountain } from 'lucide-react';
+import { useTours } from '../context/TourStoreContext';
+import TourMap from '../components/TourMap';
+import TourWeather from '../components/TourWeather';
 import heroImg from '../assets/kyrgyzstan_hero_landscape_1772534628709.png';
 import horseImg from '../assets/kyrgyzstan_horse_riding_tour_1772534860001.png';
 import lakeImg from '../assets/kyrgyzstan_lake_tour_1772535567087.png';
 import panoramaImg from '../assets/kyrgyzstan_mountain_panorama_1772534959492.png';
 
 const WHATSAPP_NUMBER = '996705660593';
+
+const difficultyConfig = {
+    Easy:     { color: '#16a34a', bg: 'rgba(220,252,231,0.85)', label: '🟢 Easy' },
+    Moderate: { color: '#d97706', bg: 'rgba(254,243,199,0.9)', label: '🟡 Moderate' },
+    Hard:     { color: '#dc2626', bg: 'rgba(254,226,226,0.88)', label: '🔴 Hard' },
+};
 
 // ─── Responsive hook ──────────────────────────────────────────────────────────
 function useWindowWidth() {
@@ -176,6 +184,12 @@ const defaultGallery = [
 ];
 
 function getTourGallery(tour) {
+    if (tour.images && tour.images.length > 0) {
+        return tour.images.map((url, i) => ({
+            src: url,
+            caption: i === 0 ? `${tour.title} - Cover` : `${tour.title} - Photo ${i + 1}`
+        }));
+    }
     if (tour.id === 'elena-taber-7') return [
         { src: horseImg, caption: 'Horseback riding to Song-Kol Lake' },
         { src: lakeImg, caption: 'Song-Kol Lake at sunset' },
@@ -218,6 +232,317 @@ function TourLightbox({ photos, index, onClose }) {
     );
 }
 
+// ─── Gallery Slider ───────────────────────────────────────────────────────────
+function GallerySlider({ photos, onOpenLightbox, isMobile }) {
+    const [active, setActive] = React.useState(0);
+    if (!photos || photos.length === 0) return null;
+    return (
+        <div style={{ marginBottom: '2.5rem' }}>
+            <div style={{
+                display: 'grid',
+                gridTemplateColumns: isMobile ? '1fr' : '1fr 130px',
+                gap: isMobile ? '0.6rem' : '0.75rem',
+                alignItems: 'start',
+            }}>
+                {/* Main image */}
+                <div
+                    onClick={() => onOpenLightbox(active)}
+                    style={{
+                        position: 'relative', borderRadius: '1.25rem', overflow: 'hidden',
+                        aspectRatio: '16/9', cursor: 'zoom-in',
+                        boxShadow: '0 8px 32px rgba(0,0,0,0.14)',
+                        background: '#111',
+                    }}
+                >
+                    <motion.img
+                        key={active}
+                        initial={{ opacity: 0, scale: 1.03 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.28 }}
+                        src={photos[active].src}
+                        alt={photos[active].caption}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                    />
+                    <div style={{
+                        position: 'absolute', inset: 0,
+                        background: 'linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 50%)',
+                        display: 'flex', alignItems: 'flex-end', padding: '1rem 1.25rem',
+                    }}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', color: '#fff' }}>
+                            <span style={{ fontSize: '0.82rem', fontWeight: 600, textShadow: '0 1px 4px rgba(0,0,0,0.6)' }}>
+                                {photos[active].caption}
+                            </span>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                <span style={{ fontSize: '0.72rem', opacity: 0.75 }}>{active + 1} / {photos.length}</span>
+                                <ZoomIn size={16} style={{ opacity: 0.85 }} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Thumbnail strip */}
+                <div style={{
+                    display: 'flex',
+                    flexDirection: isMobile ? 'row' : 'column',
+                    gap: '0.5rem',
+                    overflowX: isMobile ? 'auto' : 'visible',
+                    overflowY: isMobile ? 'visible' : 'auto',
+                    maxHeight: isMobile ? 'none' : '360px',
+                    paddingBottom: isMobile ? '4px' : 0,
+                    scrollbarWidth: 'thin',
+                }}>
+                    {photos.map((photo, idx) => (
+                        <div
+                            key={idx}
+                            onClick={() => setActive(idx)}
+                            style={{
+                                flexShrink: 0,
+                                width: isMobile ? '80px' : '100%',
+                                height: isMobile ? '56px' : '80px',
+                                borderRadius: '0.65rem', overflow: 'hidden',
+                                cursor: 'pointer',
+                                border: `2.5px solid ${active === idx ? 'hsl(var(--secondary))' : 'transparent'}`,
+                                boxShadow: active === idx ? '0 0 0 1px hsl(var(--secondary)/0.4)' : 'none',
+                                transition: 'border-color 0.18s, box-shadow 0.18s',
+                                opacity: active === idx ? 1 : 0.65,
+                            }}
+                        >
+                            <img
+                                src={photo.src} alt={photo.caption}
+                                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'opacity 0.18s' }}
+                            />
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+}
+
+// ─── Reviews ──────────────────────────────────────────────────────────────────
+const SEED_REVIEWS = {
+    default: [
+        { id: 's1', name: 'Sarah M.', rating: 5, date: '2025-08-14', text: "Absolutely breathtaking! The scenery was unlike anything I've ever seen. Our guide was incredibly knowledgeable and made the whole trip unforgettable." },
+        { id: 's2', name: 'James K.', rating: 5, date: '2025-07-22', text: "The yurt camp experience was magical \u2014 waking up to Song-Kol Lake at dawn was worth every penny. Highly recommend to any adventure seeker." },
+        { id: 's3', name: 'Anika R.', rating: 4, date: '2025-09-03', text: "Great organisation, lovely horses and authentic food. A tough but rewarding trip. Pack extra warm clothes for the evenings!" },
+    ],
+};
+
+function StarRow({ rating, size = 16, interactive = false, onRate }) {
+    const [hover, setHover] = React.useState(0);
+    return (
+        <div style={{ display: 'flex', gap: '2px' }}>
+            {[1, 2, 3, 4, 5].map(star => (
+                <span
+                    key={star}
+                    onClick={() => interactive && onRate && onRate(star)}
+                    onMouseEnter={() => interactive && setHover(star)}
+                    onMouseLeave={() => interactive && setHover(0)}
+                    style={{
+                        fontSize: size + 'px', lineHeight: 1,
+                        cursor: interactive ? 'pointer' : 'default',
+                        color: star <= (interactive ? (hover || rating) : rating) ? '#f59e0b' : '#d1d5db',
+                        transition: 'color 0.12s',
+                    }}
+                >★</span>
+            ))}
+        </div>
+    );
+}
+
+function ReviewsSection({ tourId, isMobile }) {
+    const LS_KEY = `reviews_${tourId}`;
+    const seedList = SEED_REVIEWS[tourId] || SEED_REVIEWS.default;
+
+    const [reviews, setReviews] = React.useState(() => {
+        try {
+            const stored = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
+            return stored || seedList;
+        } catch { return seedList; }
+    });
+    const [form, setForm] = React.useState({ name: '', rating: 0, text: '' });
+    const [submitted, setSubmitted] = React.useState(false);
+    const [error, setError] = React.useState('');
+
+    const avgRating = reviews.length
+        ? (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1)
+        : '—';
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (!form.name.trim()) return setError('Please enter your name.');
+        if (!form.rating) return setError('Please select a star rating.');
+        if (!form.text.trim()) return setError('Please write a short review.');
+        const newReview = {
+            id: Date.now().toString(),
+            name: form.name.trim(),
+            rating: form.rating,
+            date: new Date().toISOString().slice(0, 10),
+            text: form.text.trim(),
+        };
+        const updated = [newReview, ...reviews];
+        setReviews(updated);
+        localStorage.setItem(LS_KEY, JSON.stringify(updated));
+        setForm({ name: '', rating: 0, text: '' });
+        setError('');
+        setSubmitted(true);
+        setTimeout(() => setSubmitted(false), 3000);
+    };
+
+    const initials = (name) => name.trim().split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+    const avatarColors = ['#6366f1', '#0ea5e9', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
+    const avatarColor = (name) => avatarColors[name.charCodeAt(0) % avatarColors.length];
+
+    return (
+        <div style={{ marginTop: isMobile ? '2.5rem' : '4rem', paddingTop: isMobile ? '2rem' : '3rem', borderTop: '2px solid hsl(var(--border))' }}>
+            {/* Header */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem', marginBottom: isMobile ? '1.5rem' : '2rem' }}>
+                <div>
+                    <h2 style={{ fontSize: isMobile ? '1.3rem' : '1.6rem', fontWeight: 900, letterSpacing: '-0.03em', margin: 0 }}>Guest Reviews</h2>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.35rem' }}>
+                        <StarRow rating={Math.round(parseFloat(avgRating))} size={18} />
+                        <span style={{ fontWeight: 800, fontSize: '1.05rem' }}>{avgRating}</span>
+                        <span style={{ color: 'hsl(var(--muted-foreground))', fontSize: '0.85rem' }}>({reviews.length} review{reviews.length !== 1 ? 's' : ''})</span>
+                    </div>
+                </div>
+            </div>
+
+            {/* Review cards Slider */}
+            <div
+                className="hide-scrollbar"
+                style={{
+                    display: 'flex',
+                    gap: isMobile ? '1rem' : '1.25rem',
+                    overflowX: 'auto',
+                    scrollSnapType: 'x mandatory',
+                    paddingBottom: '1.5rem',
+                    marginBottom: '1rem',
+                    marginRight: isMobile ? '-1.5rem' : '0', // Bleed effect mobile
+                    paddingRight: isMobile ? '1.5rem' : '0',
+                    WebkitOverflowScrolling: 'touch',
+                }}
+            >
+                {reviews.map(r => (
+                    <motion.div
+                        key={r.id}
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        style={{
+                            background: '#fff',
+                            border: '1px solid hsl(var(--border))',
+                            borderRadius: '1.5rem',
+                            padding: isMobile ? '1.25rem' : '1.5rem',
+                            flexShrink: 0,
+                            width: isMobile ? '280px' : '350px',
+                            scrollSnapAlign: 'start',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            boxShadow: '0 10px 30px rgba(0,0,0,0.03)',
+                        }}
+                    >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: '1rem' }}>
+                            <div style={{
+                                width: '46px', height: '46px', borderRadius: '50%', flexShrink: 0,
+                                background: `linear-gradient(135deg, ${avatarColor(r.name)} 0%, ${avatarColor(r.name)}dd 100%)`,
+                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                color: '#fff', fontWeight: 800, fontSize: '0.95rem', letterSpacing: '0.03em',
+                                boxShadow: `0 4px 12px ${avatarColor(r.name)}40`,
+                            }}>
+                                {initials(r.name)}
+                            </div>
+                            <div style={{ flex: 1, minWidth: 0 }}>
+                                <div style={{ fontWeight: 800, fontSize: '1rem', color: '#111827', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.name}</div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.2rem' }}>
+                                    <StarRow rating={r.rating} size={14} />
+                                    <span style={{ color: 'hsl(var(--muted-foreground))', fontSize: '0.75rem', fontWeight: 500 }}>
+                                        {new Date(r.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <p style={{
+                            fontSize: '0.95rem', lineHeight: 1.6, color: '#4b5563', margin: 0,
+                            flex: 1, display: '-webkit-box', WebkitLineClamp: isMobile ? 5 : 6, WebkitBoxOrient: 'vertical', overflow: 'hidden'
+                        }}>
+                            "{r.text}"
+                        </p>
+                    </motion.div>
+                ))}
+            </div>
+
+            {/* Submit form */}
+            <div style={{
+                background: 'linear-gradient(135deg, hsl(var(--muted)/0.5) 0%, #fff 100%)',
+                border: '1.5px solid hsl(var(--border))',
+                borderRadius: '1.5rem',
+                padding: isMobile ? '1.25rem' : '2rem',
+            }}>
+                <h3 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '1.25rem', letterSpacing: '-0.02em' }}>Leave a Review</h3>
+                {submitted && (
+                    <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '0.75rem', padding: '0.75rem 1rem', marginBottom: '1rem', color: '#15803d', fontWeight: 600, fontSize: '0.9rem' }}>
+                        ✓ Thank you for your review!
+                    </div>
+                )}
+                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '0.75rem' }}>
+                        <div>
+                            <label style={{ display: 'block', fontWeight: 700, fontSize: '0.8rem', marginBottom: '0.35rem', color: 'hsl(var(--muted-foreground))' }}>Your Name</label>
+                            <input
+                                value={form.name}
+                                onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
+                                placeholder="e.g. Sarah M."
+                                style={{
+                                    width: '100%', padding: '0.65rem 1rem', borderRadius: '0.75rem',
+                                    border: '1.5px solid hsl(var(--border))', fontSize: '0.9rem',
+                                    fontFamily: 'inherit', background: '#fff', boxSizing: 'border-box',
+                                    outline: 'none',
+                                }}
+                            />
+                        </div>
+                        <div>
+                            <label style={{ display: 'block', fontWeight: 700, fontSize: '0.8rem', marginBottom: '0.35rem', color: 'hsl(var(--muted-foreground))' }}>Your Rating</label>
+                            <div style={{ paddingTop: '0.55rem' }}>
+                                <StarRow rating={form.rating} size={28} interactive onRate={r => setForm(f => ({ ...f, rating: r }))} />
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label style={{ display: 'block', fontWeight: 700, fontSize: '0.8rem', marginBottom: '0.35rem', color: 'hsl(var(--muted-foreground))' }}>Your Review</label>
+                        <textarea
+                            value={form.text}
+                            onChange={e => setForm(f => ({ ...f, text: e.target.value }))}
+                            placeholder="Share your experience with this tour..."
+                            rows={4}
+                            style={{
+                                width: '100%', padding: '0.75rem 1rem', borderRadius: '0.75rem',
+                                border: '1.5px solid hsl(var(--border))', fontSize: '0.9rem',
+                                fontFamily: 'inherit', background: '#fff', resize: 'vertical',
+                                boxSizing: 'border-box', outline: 'none', lineHeight: 1.6,
+                            }}
+                        />
+                    </div>
+                    {error && <p style={{ color: '#dc2626', fontSize: '0.82rem', fontWeight: 600, margin: 0 }}>{error}</p>}
+                    <button
+                        type="submit"
+                        style={{
+                            alignSelf: 'flex-start',
+                            padding: '0.75rem 1.75rem', borderRadius: '0.875rem',
+                            background: 'hsl(var(--primary))', color: '#fff',
+                            fontWeight: 700, fontSize: '0.9rem', border: 'none', cursor: 'pointer',
+                            fontFamily: 'inherit', display: 'flex', alignItems: 'center', gap: '0.5rem',
+                            transition: 'opacity 0.2s',
+                        }}
+                        onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
+                        onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+                    >
+                        <Send size={15} /> Submit Review
+                    </button>
+                </form>
+            </div>
+        </div>
+    );
+}
+
 // ─── Sidebar card (reused on both desktop and mobile) ─────────────────────────
 function SidebarCard({ tour, onBookNow, sendWhatsApp, isMobile }) {
     return (
@@ -235,11 +560,12 @@ function SidebarCard({ tour, onBookNow, sendWhatsApp, isMobile }) {
                     { icon: <Calendar size={15} />, label: 'Season', value: tour.season },
                     { icon: <MapPin size={15} />, label: 'Start / End', value: 'Bishkek' },
                     { icon: <Users size={15} />, label: 'Group size', value: '1 – 8 people' },
+                    ...(tour.difficulty ? [{ icon: <Mountain size={15} />, label: 'Difficulty', value: tour.difficulty }] : []),
                 ].map(item => (
                     <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.82rem', background: isMobile ? 'hsl(var(--muted)/0.5)' : 'none', borderRadius: isMobile ? '0.6rem' : 0, padding: isMobile ? '0.5rem 0.75rem' : '0.25rem 0', border: isMobile ? 'none' : 'none' }}>
-                        <span style={{ color: 'hsl(var(--secondary))', flexShrink: 0 }}>{item.icon}</span>
+                        <span style={{ color: item.label === 'Difficulty' && tour.difficulty ? (difficultyConfig[tour.difficulty]?.color || 'hsl(var(--secondary))') : 'hsl(var(--secondary))', flexShrink: 0 }}>{item.icon}</span>
                         {!isMobile && <span style={{ color: 'hsl(var(--muted-foreground))', flex: 1 }}>{item.label}</span>}
-                        <span style={{ fontWeight: 700 }}>{item.value}</span>
+                        <span style={{ fontWeight: 700, color: item.label === 'Difficulty' && tour.difficulty ? difficultyConfig[tour.difficulty]?.color : 'inherit' }}>{item.value}</span>
                     </div>
                 ))}
             </div>
@@ -293,7 +619,8 @@ const TourDetail = ({ onBookNow }) => {
     const isMobile = w < 640;
     const isTablet = w < 1024;
 
-    const tour = toursData.find(t => t.id === id);
+    const { allTours } = useTours();
+    const tour = allTours.find(t => t.id === id);
 
     if (!tour) {
         return (
@@ -304,7 +631,10 @@ const TourDetail = ({ onBookNow }) => {
         );
     }
 
-    const itinerary = itineraryMap[tour.id] || getDefaultItinerary(tour);
+    // Use tour's own itinerary if present (admin/PDF tours), else fall back to static map
+    const itinerary = (tour.itinerary && tour.itinerary.length > 0)
+        ? tour.itinerary
+        : (itineraryMap[tour.id] || getDefaultItinerary(tour));
     const tourGallery = getTourGallery(tour);
     const highlights = tour.highlights || [
         'Local Kyrgyz guides born in the mountains',
@@ -314,6 +644,7 @@ const TourDetail = ({ onBookNow }) => {
         'Flexible, customizable itinerary',
         'Transfer from/to Bishkek included',
     ];
+    const hasIncludes = (tour.includes && tour.includes.length > 0) || (tour.excludes && tour.excludes.length > 0);
 
     const sendWhatsApp = () => {
         const text = `👋 Hi! I'd like to book the tour:\n🏔 *${tour.title}* (${tour.duration})\n💰 Price: ${tour.price}\n📅 Please tell me about available dates.`;
@@ -321,8 +652,8 @@ const TourDetail = ({ onBookNow }) => {
     };
 
     const tabs = [
-        { id: 'description', label: isMobile ? 'Description' : 'Description' },
-        { id: 'gallery', label: isMobile ? `Gallery (${tourGallery.length})` : `Gallery (${tourGallery.length})` },
+        { id: 'description', label: 'Description' },
+        ...(hasIncludes ? [{ id: 'includes', label: 'Includes' }] : []),
         { id: 'packing', label: isMobile ? 'Packing' : 'What to Pack?' },
         { id: 'beforeyougo', label: isMobile ? 'Tips' : 'Before You Go' },
     ];
@@ -331,8 +662,8 @@ const TourDetail = ({ onBookNow }) => {
         <div style={{ paddingTop: '80px', background: '#fafaf9', minHeight: '100vh', paddingBottom: isMobile ? '80px' : 0 }}>
 
             {/* ── Hero ── */}
-            <div style={{ position: 'relative', height: isMobile ? '45vh' : '60vh', minHeight: isMobile ? '280px' : '380px', overflow: 'hidden' }}>
-                <img src={tour.image} alt={tour.title} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.5)' }} />
+            <div style={{ position: 'relative', height: isMobile ? '30vh' : '42vh', minHeight: isMobile ? '200px' : '280px', overflow: 'hidden' }}>
+                <img src={tour.image} alt={tour.title} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.55)' }} />
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.15) 60%, transparent 100%)' }} />
 
                 {/* Back button */}
@@ -362,6 +693,18 @@ const TourDetail = ({ onBookNow }) => {
                         <span style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(6px)', border: '1px solid rgba(255,255,255,0.3)', color: '#fff', padding: '0.2rem 0.75rem', borderRadius: '999px', fontSize: '0.7rem', fontWeight: 600 }}>
                             {tour.season}
                         </span>
+                        {tour.difficulty && difficultyConfig[tour.difficulty] && (
+                            <span style={{
+                                background: difficultyConfig[tour.difficulty].bg,
+                                color: difficultyConfig[tour.difficulty].color,
+                                padding: '0.2rem 0.75rem', borderRadius: '999px',
+                                fontSize: '0.7rem', fontWeight: 700,
+                                display: 'inline-flex', alignItems: 'center', gap: '0.3rem',
+                            }}>
+                                <Mountain size={11} />
+                                {difficultyConfig[tour.difficulty].label}
+                            </span>
+                        )}
                     </div>
                     <h1 style={{ fontSize: isMobile ? 'clamp(1.5rem, 6vw, 2.2rem)' : 'clamp(1.75rem, 4vw, 3.5rem)', fontWeight: 900, letterSpacing: '-0.03em', lineHeight: 1.1 }}>
                         {tour.title}
@@ -371,6 +714,7 @@ const TourDetail = ({ onBookNow }) => {
 
             {/* ── Content + Sidebar ── */}
             <div className="container" style={{ paddingTop: isMobile ? '1.5rem' : '3rem', paddingBottom: isMobile ? '1.5rem' : '5rem', paddingLeft: isMobile ? '1.25rem' : '1.5rem', paddingRight: isMobile ? '1.25rem' : '1.5rem', boxSizing: 'border-box' }}>
+
                 <div style={{
                     display: 'grid',
                     gridTemplateColumns: isTablet ? '1fr' : '1fr 340px',
@@ -416,9 +760,24 @@ const TourDetail = ({ onBookNow }) => {
                         {/* Tab: Description */}
                         {activeTab === 'description' && (
                             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-                                <p style={{ fontSize: isMobile ? '0.95rem' : '1.05rem', lineHeight: 1.8, color: 'hsl(var(--muted-foreground))', marginBottom: '2rem' }}>
+
+                                {/* Gallery Slider */}
+                                <GallerySlider
+                                    photos={tourGallery}
+                                    onOpenLightbox={(idx) => setLightboxIndex(idx)}
+                                    isMobile={isMobile}
+                                />
+
+                                <p style={{ fontSize: isMobile ? '0.95rem' : '1.05rem', lineHeight: 1.8, color: 'hsl(var(--muted-foreground))', marginBottom: '1.5rem' }}>
                                     {tour.description}
                                 </p>
+
+                                {/* Full overview (PDF-extracted) */}
+                                {tour.overview && (
+                                    <p style={{ fontSize: isMobile ? '0.95rem' : '1.05rem', lineHeight: 1.8, color: 'hsl(var(--muted-foreground))', marginBottom: '2rem', borderLeft: '4px solid hsl(var(--secondary))', paddingLeft: '1rem' }}>
+                                        {tour.overview}
+                                    </p>
+                                )}
 
                                 <h2 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '1rem', letterSpacing: '-0.02em' }}>Tour Highlights</h2>
                                 <div style={{
@@ -443,49 +802,45 @@ const TourDetail = ({ onBookNow }) => {
                             </motion.div>
                         )}
 
-                        {/* Tab: Gallery */}
-                        {activeTab === 'gallery' && (
+                        {/* Tab: Includes & Excludes (shown for admin/PDF tours) */}
+                        {activeTab === 'includes' && (
                             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-                                <h2 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '0.4rem', letterSpacing: '-0.02em' }}>Tour Gallery</h2>
-                                <p style={{ color: 'hsl(var(--muted-foreground))', fontSize: '0.875rem', marginBottom: '1.25rem' }}>
-                                    {isMobile ? 'Tap any photo to view full screen.' : 'Click any photo to view full screen.'}
-                                </p>
-                                <div style={{
-                                    display: 'grid',
-                                    gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(auto-fill, minmax(200px, 1fr))',
-                                    gap: isMobile ? '0.65rem' : '1rem',
-                                }}>
-                                    {tourGallery.map((photo, idx) => (
-                                        <div
-                                            key={idx}
-                                            onClick={() => setLightboxIndex(idx)}
-                                            style={{
-                                                position: 'relative', borderRadius: '1rem', overflow: 'hidden',
-                                                cursor: 'zoom-in', aspectRatio: '4/3',
-                                                boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-                                                // wide shot on desktop only
-                                                gridColumn: (!isMobile && idx % 3 === 0) ? 'span 2' : 'span 1',
-                                            }}
-                                        >
-                                            <img
-                                                src={photo.src} alt={photo.caption}
-                                                style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease', display: 'block' }}
-                                                onMouseEnter={e => e.target.style.transform = 'scale(1.06)'}
-                                                onMouseLeave={e => e.target.style.transform = 'scale(1)'}
-                                            />
-                                            <div
-                                                style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 55%)', display: 'flex', alignItems: 'flex-end', padding: '0.75rem' }}
-                                            >
-                                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', color: '#fff' }}>
-                                                    <span style={{ fontSize: '0.72rem', fontWeight: 600, lineHeight: 1.3 }}>{photo.caption}</span>
-                                                    <ZoomIn size={15} style={{ flexShrink: 0, marginLeft: '0.4rem', opacity: 0.85 }} />
-                                                </div>
+                                <h2 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '1.5rem', letterSpacing: '-0.02em' }}>What's Included</h2>
+                                <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '1.5rem', marginBottom: '2rem' }}>
+                                    {(tour.includes && tour.includes.length > 0) && (
+                                        <div>
+                                            <div style={{ fontWeight: 800, fontSize: '0.9rem', color: '#16a34a', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                                                <Check size={16} /> Included in price
+                                            </div>
+                                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                                {tour.includes.map((item, i) => (
+                                                    <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', background: '#f0fdf4', padding: '0.65rem 0.9rem', borderRadius: '0.65rem', border: '1px solid #bbf7d0', fontSize: '0.875rem', fontWeight: 500 }}>
+                                                        <Check size={14} style={{ color: '#16a34a', marginTop: '0.15rem', flexShrink: 0 }} />
+                                                        {item}
+                                                    </div>
+                                                ))}
                                             </div>
                                         </div>
-                                    ))}
+                                    )}
+                                    {(tour.excludes && tour.excludes.length > 0) && (
+                                        <div>
+                                            <div style={{ fontWeight: 800, fontSize: '0.9rem', color: '#dc2626', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                                                <X size={16} /> Not included
+                                            </div>
+                                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                                {tour.excludes.map((item, i) => (
+                                                    <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', background: '#fef2f2', padding: '0.65rem 0.9rem', borderRadius: '0.65rem', border: '1px solid #fecaca', fontSize: '0.875rem', fontWeight: 500 }}>
+                                                        <X size={14} style={{ color: '#dc2626', marginTop: '0.15rem', flexShrink: 0 }} />
+                                                        {item}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             </motion.div>
                         )}
+
 
                         {/* Tab: Packing */}
                         {activeTab === 'packing' && (
@@ -575,6 +930,18 @@ const TourDetail = ({ onBookNow }) => {
                         </div>
                     )}
                 </div>
+
+                {/* ── Reviews ── */}
+                <ReviewsSection tourId={tour.id} isMobile={isMobile} />
+
+                {/* ── Weather & Map ── */}
+                {tour.mapPoints && tour.mapPoints.length > 0 && (
+                    <>
+                        <TourWeather mapPoints={tour.mapPoints} isMobile={isMobile} />
+                        <TourMap mapPoints={tour.mapPoints} isMobile={isMobile} />
+                    </>
+                )}
+
             </div>
 
             {/* ── Mobile: Sticky Bottom Booking Bar ── */}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ArrowRight } from 'lucide-react';
+import Logo from './Logo';
 
 const Header = ({ onBookNow }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -41,9 +42,7 @@ const Header = ({ onBookNow }) => {
       <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isLight ? 'glass py-3 shadow-md' : 'bg-transparent py-5'}`}>
         <div className="container flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 no-underline" style={{ zIndex: 1001, position: 'relative' }}>
-            <div className="text-2xl font-bold tracking-tighter" style={{ color: isMobileMenuOpen ? '#fff' : (isLight ? 'hsl(var(--primary))' : 'white') }}>
-              KYRGYZ<span style={{ color: 'hsl(var(--secondary))' }}>RIDERS</span>
-            </div>
+            <Logo isLight={!isMobileMenuOpen && isLight} size="md" />
           </Link>
 
           {/* Desktop Nav */}

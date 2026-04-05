@@ -2,10 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, ArrowRight, Mountain, Droplets, Trees, Home, ChevronDown } from 'lucide-react';
 import { sightsData } from '../data';
-import heroImg from '../assets/kyrgyzstan_hero_landscape_1772534628709.png';
-import horseTourImg from '../assets/kyrgyzstan_horse_riding_tour_1772534860001.png';
-import lakeTourImg from '../assets/kyrgyzstan_lake_tour_1772535567087.png';
-import panoramaImg from '../assets/kyrgyzstan_mountain_panorama_1772534959492.png';
+import heroImg from '../assets/0I1A2081.jpg';
+import horseTourImg from '../assets/0I1A2617.jpg';
+import lakeTourImg from '../assets/IMG_3781.jpg';
+import panoramaImg from '../assets/0I1A2101.jpg';
+import kelSuuImg from '../assets/0I1A1778 (1).jpg';
+import tashRabatImg from '../assets/0I1A2245.jpg';
+import altynArashanImg from '../assets/0I1A2355.jpg';
+import karakolImg from '../assets/IMG_3567.jpg';
+import cholponAtaImg from '../assets/IMG_3574.jpg';
+
 
 function useWindowWidth() {
     const [width, setWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
@@ -37,7 +43,7 @@ const allSights = [
         elevation: '3,520 m',
         region: 'Naryn Region',
         season: 'June – September',
-        image: horseTourImg,
+        image: kelSuuImg,
         icon: <Droplets size={20} />,
         description: "Kel-Suu is one of Kyrgyzstan's most dramatic and remote destinations, nestled in a narrow gorge near the Chinese border. The lake appears suddenly as you round a cliff face — a vivid turquoise ribbon of water surrounded by sheer canyon walls up to 200 meters high.\n\nAccess requires a permit and a 4×4 vehicle followed by a boat ride or swim-float across the icy entrance channel. The remoteness is part of the appeal: very few tourists make it this far, making it a genuinely off-grid adventure.\n\nThe area around Kel-Suu is inhabited by a small community of herder families who welcome travelers into their yurts. The combination of dramatic geology, crystal-clear water, and authentic nomadic culture makes this one of Kyrgyzstan's most rewarding experiences.",
         highlights: ['Turquoise canyon lake', 'Boat ride through gorge', 'Nomadic communities', 'Permit required'],
@@ -49,7 +55,7 @@ const allSights = [
         elevation: '2,500–3,800 m',
         region: 'Issyk-Kul Region',
         season: 'May – October',
-        image: panoramaImg,
+        image: altynArashanImg,
         icon: <Mountain size={20} />,
         description: "Altyn-Arashan — meaning 'Golden Spring' in Kyrgyz — is a stunning alpine valley located 40 km southeast of Karakol. The valley is famous for its natural hot springs rich in minerals, which can be reached on foot or horseback along a scenic gorge trail.\n\nAt the head of the valley rises Palatka Peak (4,260 m), and from its upper reaches you can see the dramatic ice-covered flanks of the Terskey Ala-Too range. The surrounding forests of Tien Shan fir and alpine meadows bursting with wildflowers make Altyn-Arashan one of the most beautiful valleys in Kyrgyzstan.\n\nA small cluster of guesthouses and shepherds' huts provides accommodation. The hot spring baths themselves are simple outdoor pools — a deeply relaxing reward after a full day of hiking.",
         highlights: ['Natural hot spring pools', 'Forest hiking trails', 'Views of Palatka Peak', 'Glacier scenery'],
@@ -61,7 +67,7 @@ const allSights = [
         elevation: '1,770 m',
         region: 'Issyk-Kul Region',
         season: 'All Year',
-        image: heroImg,
+        image: karakolImg,
         icon: <Home size={20} />,
         description: "Karakol is the fourth-largest city in Kyrgyzstan, founded in 1869 as a Russian Imperial outpost. Today it serves as the gateway to some of the most dramatic mountain landscapes in the country, including Altyn-Arashan Valley and Ala-Kol Lake.\n\nThe city itself has several notable landmarks: a beautiful wooden Russian Orthodox Cathedral built in 1895 without a single nail, and an ornate wooden Dungan Mosque built in 1910 with classic Chinese architectural details. Both are remarkably well-preserved and reflect the multicultural heritage of the region.\n\nKarakol hosts a renowned animal market every Sunday — one of the largest in Central Asia — where you can see horses, cows, sheep, and handcrafts being traded. The city's bazaar district is also excellent for sampling local food.",
         highlights: ['Wooden Orthodox Cathedral', 'Dungan Mosque', 'Sunday animal market', 'Mountain gateway'],
@@ -73,7 +79,7 @@ const allSights = [
         elevation: '1,620 m',
         region: 'Issyk-Kul Region',
         season: 'May – September',
-        image: lakeTourImg,
+        image: cholponAtaImg,
         icon: <Trees size={20} />,
         description: "Cholpon-Ata is the main resort town on the northern shore of Ysyk-Kol Lake, and also one of Kyrgyzstan's most significant archaeological sites. The town is famous for its Open-Air Petroglyph Museum — a field of granite boulders engraved with hundreds of Bronze Age carvings of ibex, deer, hunting scenes, and celestial symbols.\n\nThe museum grounds cover several hectares and contain over 2,000 petroglyphs, some dating back 3,000 years. Walking among the stones at dusk, with the lake shimmering in the background, is a genuinely moving experience.\n\nBeyond the museum, Cholpon-Ata offers beautiful sandy beaches on the lake shore, a local market, and easy access to the mountain villages of the Kyungöy Range.",
         highlights: ['Bronze Age petroglyphs', 'Sandy lake beaches', 'Ysyk-Kol views', 'Local market'],
@@ -85,7 +91,7 @@ const allSights = [
         elevation: '1,607 m',
         region: 'Issyk-Kul Region',
         season: 'All Year',
-        image: panoramaImg,
+        image: horseTourImg,
         icon: <Droplets size={20} />,
         description: "Ysyk-Kol — meaning 'Warm Lake' in Kyrgyz — is the second-largest alpine lake in the world after Titicaca, and the tenth deepest lake on earth. Despite its high altitude, it never freezes in winter due to its depth, salinity, and thermal activity.\n\nThe lake is surrounded by snow-capped peaks of the Tien Shan range on both sides, creating a landscape of exceptional beauty. The north shore is more developed, with resort towns and sandy beaches, while the south shore remains wilder and more remote.\n\nYsyk-Kol has been an important trade and cultural hub for centuries: Silk Road caravans once passed along its shores, and Soviet-era health sanatoriums still dot the northern coast. Today it attracts visitors for swimming, watersports, hiking, and exploring nearby archaeological sites.",
         highlights: ['Never-freezing lake', '2nd largest alpine lake', 'North & south shores', 'Silk Road heritage'],
@@ -97,7 +103,7 @@ const allSights = [
         elevation: '3,200 m',
         region: 'Naryn Region',
         season: 'May – October',
-        image: panoramaImg,
+        image: tashRabatImg,
         icon: <Home size={20} />,
         description: "Tash-Rabat is one of the most remarkable medieval structures in Central Asia — a 15th-century stone caravanserai built in a remote mountain valley near the Chinese border. The building served as a rest stop for Silk Road merchants and travelers making the arduous crossing between China and Persia.\n\nThe structure is built entirely from dark grey stone and features a main domed hall, a labyrinth of rooms around a central corridor, and a dungeon. Its walls are up to 2 meters thick, providing insulation from the cold mountain climate.\n\nThe surrounding landscape is stunning: a wide high-altitude valley ringed by rolling jailoos (summer pastures) where nomadic families still graze their horses. Yurt camps nearby offer overnight stays with a view of the stars across the open steppe.",
         highlights: ['Medieval Silk Road stop', 'Stone dome architecture', 'Nomadic yurt camps', 'Border region'],

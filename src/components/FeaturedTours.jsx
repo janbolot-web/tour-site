@@ -1,12 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import TourCard from './TourCard';
-import { toursData } from '../data';
+import { useTours } from '../context/TourStoreContext';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 
 const FeaturedTours = () => {
-    const featuredTours = toursData.filter(tour => tour.featured).slice(0, 3);
+    const { allTours } = useTours();
+    const featuredTours = allTours.filter(tour => tour.featured).slice(0, 3);
 
     return (
         <section id="tours" style={{ padding: '7rem 0', background: 'hsl(var(--muted) / 0.25)' }}>

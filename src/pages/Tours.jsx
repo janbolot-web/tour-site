@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Search, X, Clock, Calendar, Play } from 'lucide-react';
 import TourCard from '../components/TourCard';
-import { toursData } from '../data';
+import { useTours } from '../context/TourStoreContext';
 import heroImg from '../assets/kyrgyzstan_mountain_panorama_1772534959492.png';
 
 function useWindowWidth() {
@@ -104,7 +104,8 @@ const Tours = ({ onBookNow }) => {
     const isMobile = w < 640;
     const isTablet = w < 900;
 
-    const filteredTours = toursData.filter(tour => {
+    const { allTours } = useTours();
+    const filteredTours = allTours.filter(tour => {
         if (category !== CATEGORIES[0] && tour.category !== category) return false;
         if (duration !== DURATIONS[0] && durationLabel(tour.durationDays) !== duration) return false;
         if (month !== 'Any Month') {
@@ -176,7 +177,7 @@ const Tours = ({ onBookNow }) => {
                             letterSpacing: '0.1em', textTransform: 'uppercase',
                             color: 'hsl(var(--secondary))', marginBottom: '0.75rem',
                         }}>
-                            {toursData.length} Tours Available
+                            {allTours.length} Tours Available
                         </span>
                         <h1 style={{
                             fontSize: isMobile ? 'clamp(1.75rem, 8vw, 2.5rem)' : 'clamp(2.5rem, 6vw, 5.5rem)',
@@ -233,7 +234,7 @@ const Tours = ({ onBookNow }) => {
                             <iframe
                                 width="100%" height="100%"
                                 src="https://www.youtube.com/embed/o6QQ1YEH6U0?si=yWu0CSa56oEwWSOI?autoplay=1"
-                                title="Kyrgyz Riders Travel Video"
+                                title="TRIPLINE Travel Video"
                                 allow="autoplay; fullscreen"
                                 style={{ border: 'none' }}
                             />
