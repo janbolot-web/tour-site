@@ -128,7 +128,7 @@ const AboutUs = () => {
                                 </span>
                             </div>
 
-                            {/* We Are TRIPLINE intro */}
+                            {/*  intro */}
                             <h2 style={{
                                 fontSize: isMobile ? 'clamp(1.5rem, 6vw, 2rem)' : 'clamp(2rem, 4vw, 3rem)',
                                 fontWeight: 900, letterSpacing: '-0.03em',

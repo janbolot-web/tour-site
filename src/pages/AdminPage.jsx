@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Upload, Check, X, Trash2, Save, Loader, FileText, Plus, AlertCircle, ChevronDown, Key } from 'lucide-react';
 import { useTours } from '../context/TourStoreContext';
@@ -120,8 +120,14 @@ const AdminPage = () => {
     // ── Store ─────────────────────────────────────────────────────────────────
     const { adminTours, addTour, deleteTour, updateTour } = useTours();
 
+    const [apiKey, setApiKey] = useState('');
+
+    useEffect(() => {
+        const saved = localStorage.getItem(LS_GEMINI_KEY);
+        if (saved) setApiKey(saved);
+    }, []);
+
     // ── Hardcoded Keys (Fill these in) ────────────────────────────────────────
-    const API_KEY = 'AIzaSyBWkmG9gl0Y8jiuvxRokELceIEUVgk1nho'; // Вставь Gemini API Key
     const CLOUD_NAME = 'dsfsrf2xw'; // Вставь Cloudinary Cloud Name
     const UPLOAD_PRESET = 'tripline'; // Вставь Cloudinary Upload Preset
 
@@ -137,6 +143,7 @@ const AdminPage = () => {
     const fileRef = useRef();
 
     const [isUploading, setIsUploading] = useState(false);
+    const [tourToDelete, setTourToDelete] = useState(null);
 
     const handleManualImages = async (e) => {
         const files = Array.from(e.target.files);
@@ -202,12 +209,12 @@ const AdminPage = () => {
     // ── File pipeline ─────────────────────────────────────────────────────────
     const handleFile = useCallback(async (file) => {
         if (!file || file.type !== 'application/pdf') { setError('Please upload a PDF file.'); return; }
-        if (!API_KEY.trim()) { setError('API ключ от Gemini не указан в коде.'); return; }
+        if (!apiKey.trim()) { setError('API ключ от Gemini не указан.'); return; }
         setError(''); setStage('processing'); setProgress('Reading PDF…');
         try {
             const text = await extractTextFromPdf(file);
             setProgress('Extracting tour data & building map route with Gemini AI…');
-            const tour = await extractTourFromText(text, API_KEY.trim());
+            const tour = await extractTourFromText(text, apiKey.trim());
             const { image: _geminiImage, ...cleanTour } = tour;
 
             // Normalise mapPoints — ensure lat/lng are numbers, keep label
@@ -239,7 +246,7 @@ const AdminPage = () => {
             setError(e.message || 'Something went wrong.');
             setStage('idle');
         }
-    }, []);
+    }, [apiKey]);
 
     const handleDrop = e => { e.preventDefault(); setDragOver(false); handleFile(e.dataTransfer.files[0]); };
 
@@ -314,6 +321,40 @@ const AdminPage = () => {
 
                     {/* ══ Left: upload / processing / preview ══ */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+
+                        {/* Settings */}
+                        <div style={{ background: '#fff', borderRadius: '1.1rem', border: '1px solid #e5e7eb', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', overflow: 'hidden' }}>
+                            <div style={{ padding: '0.9rem 1.25rem', borderBottom: '1px solid #f3f4f6', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                                <Key size={14} style={{ color: '#111827' }} />
+                                <span style={{ fontWeight: 800, fontSize: '0.8rem', color: '#111827' }}>Integrations</span>
+                            </div>
+                            <div style={{ padding: '1rem 1.25rem' }}>
+                                <Field label="Gemini API Key">
+                                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                        <input 
+                                            type="text" 
+                                            value={apiKey} 
+                                            onChange={e => {
+                                                setApiKey(e.target.value);
+                                                localStorage.setItem(LS_GEMINI_KEY, e.target.value);
+                                            }} 
+                                            placeholder="AIzaSy..." 
+                                            style={{ ...inputSx, flex: 1 }} 
+                                            {...fx} 
+                                        />
+                                        <button 
+                                            onClick={() => {
+                                                localStorage.setItem(LS_GEMINI_KEY, apiKey);
+                                                alert('Ключ успешно сохранен!');
+                                            }}
+                                            style={{ padding: '0 1rem', borderRadius: '0.6rem', background: '#e5e7eb', color: '#374151', border: 'none', fontWeight: 700, fontSize: '0.75rem', cursor: 'pointer', fontFamily: 'inherit' }}>
+                                            Save
+                                        </button>
+                                    </div>
+                                    <p style={{ fontSize: '0.65rem', color: '#9ca3af', marginTop: '0.3rem', marginBottom: 0 }}>Required to parse PDF files. Saved securely in your browser's local storage.</p>
+                                </Field>
+                            </div>
+                        </div>
 
                         {/* Upload / progress */}
                         {stage === 'idle' && (
@@ -590,9 +631,17 @@ const AdminPage = () => {
                                                 <div style={{ fontWeight: 700, fontSize: '0.8rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{tour.title}</div>
                                                 <div style={{ fontSize: '0.67rem', color: '#9ca3af' }}>{tour.duration} · {tour.price}</div>
                                             </div>
-                                            <button onClick={(e) => { e.stopPropagation(); if (window.confirm('Delete this tour?')) deleteTour(tour.id); }} style={{ flexShrink: 0, padding: '0.3rem', borderRadius: '0.4rem', background: '#fef2f2', border: '1px solid #fecaca', color: '#ef4444', cursor: 'pointer' }}>
-                                                <Trash2 size={12} />
-                                            </button>
+                                            {tourToDelete === tour.id ? (
+                                                <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
+                                                    <span style={{ fontSize: '0.65rem', fontWeight: 700, color: '#ef4444' }}>Sure?</span>
+                                                    <button onClick={(e) => { e.stopPropagation(); deleteTour(tour.id); setTourToDelete(null); }} style={{ padding: '0.2rem 0.5rem', borderRadius: '0.3rem', background: '#ef4444', border: 'none', color: '#fff', fontSize: '0.65rem', fontWeight: 700, cursor: 'pointer' }}>Yes</button>
+                                                    <button onClick={(e) => { e.stopPropagation(); setTourToDelete(null); }} style={{ padding: '0.2rem 0.5rem', borderRadius: '0.3rem', background: '#e5e7eb', border: 'none', color: '#374151', fontSize: '0.65rem', fontWeight: 700, cursor: 'pointer' }}>No</button>
+                                                </div>
+                                            ) : (
+                                                <button onClick={(e) => { e.stopPropagation(); setTourToDelete(tour.id); }} style={{ flexShrink: 0, padding: '0.3rem', borderRadius: '0.4rem', background: '#fef2f2', border: '1px solid #fecaca', color: '#ef4444', cursor: 'pointer' }}>
+                                                    <Trash2 size={12} />
+                                                </button>
+                                            )}
                                         </div>
                                     ))}
                                 </div>
